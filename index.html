@@ -84,19 +84,17 @@
     </div>
 
     <script>
-        function verifyMaster() {
-            // මචං මේක තමයි උඹේ රහස් පාස්වර්ඩ් එක
-            let key = prompt("ENTER YOUR PASSWORD:");
-            
-            if (key === "20241118") {
-                alert("ACCESS GRANTED! WELCOME MASTER.");
-                // මෙතනට පස්සේ අපි ඇඩ්මින් පැනල් එකේ ලින්ක් එක දාමු
-                window.location.href = "settings.html"; 
-            } else if (key !== null) {
-                alert("ACCESS DENIED! YOU ARE NOT THE OWNER.");
-            }
+    function verifyMaster() {
+        let key = prompt("ENTER MASTER ACCESS KEY:");
+        
+        if (key === "20241118") {
+            alert("ACCESS GRANTED! WELCOME MASTER.");
+            // මෙන්න මෙතන මම කලින් settings.html දීලා තිබ්බේ. ඒක දැන් admin.html කළා.
+            window.location.href = "admin.html"; 
+        } else if (key !== null) {
+            alert("ACCESS DENIED! YOU ARE NOT THE OWNER.");
         }
-    </script>
-
+    }
+</script>
 </body>
 </html>
