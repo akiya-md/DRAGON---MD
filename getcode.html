@@ -2,55 +2,90 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AKIYA 龍 - GET BOT</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; }
+        .glass-box { background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(15px); border: 1px solid rgba(255, 0, 0, 0.2); }
+        .red-glow { text-shadow: 0 0 15px rgba(255, 0, 0, 0.8); }
+        input:focus { border-color: #ff0000; box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
+    </style>
 </head>
-<body class="bg-black text-white p-10 text-center min-h-screen flex flex-col items-center justify-center">
-    <h1 class="text-red-600 text-3xl font-black italic mb-10 tracking-widest uppercase">/ GET YOUR PAIRING CODE /</h1>
-    <div class="bg-zinc-900 p-10 rounded-[40px] border border-red-600 inline-block shadow-[0_0_50px_rgba(255,0,0,0.1)]">
-        <input type="text" id="phoneNumber" placeholder="947xxxxxxxx" class="bg-transparent border-b-2 border-red-600 text-center text-xl outline-none mb-8 w-full max-w-xs font-mono">
-        <div id="statusContainer" class="mb-8 hidden">
-            <p id="statusText" class="text-xs text-gray-400 mb-2 uppercase"></p>
-            <div id="codeDisplay" class="text-4xl font-black text-red-600 tracking-[10px]"></div>
-        </div>
-        <button onclick="getPairingCode()" id="submitBtn" class="bg-red-600 px-10 py-3 rounded-full font-bold uppercase text-xs">Get Code</button>
+<body class="min-h-screen flex flex-col items-center justify-center p-6">
+
+    <div class="mb-12 text-center">
+        <h1 class="text-4xl font-black italic red-glow uppercase tracking-widest">/ GET YOUR PAIRING CODE /</h1>
     </div>
+
+    <div class="glass-box p-10 rounded-[40px] border-2 border-red-900/30 w-full max-w-md text-center shadow-2xl">
+        <div class="mb-8">
+            <input type="text" id="phoneNumber" placeholder="947xxxxxxxx" 
+                   class="bg-transparent border-b-2 border-red-600 text-center text-2xl outline-none w-full font-mono py-2 transition-all">
+        </div>
+
+        <div id="statusContainer" class="mb-8 hidden">
+            <p id="statusText" class="text-[10px] text-gray-500 mb-3 uppercase tracking-widest font-bold"></p>
+            <div id="codeDisplay" class="text-5xl font-black text-red-600 tracking-[8px] select-all"></div>
+        </div>
+
+        <button onclick="getPairingCode()" id="submitBtn" 
+                class="w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-full font-black uppercase text-xs tracking-widest transition shadow-lg shadow-red-900/20">
+            Get Code
+        </button>
+    </div>
+
+    <p class="mt-8 text-gray-600 text-[10px] uppercase tracking-widest">Powered by AKIYA-MD System</p>
 
     <script>
         async function getPairingCode() {
-            const number = document.getElementById('phoneNumber').value;
+            const number = document.getElementById('phoneNumber').value.trim();
             const btn = document.getElementById('submitBtn');
-            const statusContainer = document.getElementById('statusContainer');
             const statusText = document.getElementById('statusText');
             const codeDisplay = document.getElementById('codeDisplay');
+            const statusContainer = document.getElementById('statusContainer');
 
-            if (!number || number.length < 10) { alert("නම්බර් එක ගහපන්!"); return; }
+            // Input Validation
+            if (!number) {
+                alert("අඩෝ නම්බර් එක ගහපන්!");
+                return;
+            }
 
+            // UI Reset
             btn.disabled = true;
-            btn.innerText = "Connecting...";
+            btn.innerText = "CONNECTING...";
             statusContainer.classList.remove('hidden');
-            statusText.innerText = "WAITING FOR WHATSAPP...";
+            statusText.innerText = "CONNECTING TO AKIYA SERVER...";
+            codeDisplay.innerText = "";
 
             try {
-                // සෘජුවම ලින්ක් එක මෙතන තියෙනවා
-                const url = "https://akiya-api-rhlv.onrender.com/code?number=" + number;
-                const response = await fetch(url);
+                // සර්වර් එකට කනෙක්ට් වෙන තැන (BYPASS FIX)
+                // උඹේ සර්වර් එක "Cannot GET /" කියන්නේ පණ තියෙන නිසයි. ඒ නිසා මේ ලින්ක් එක දැන් වැඩ.
+                const response = await fetch(`https://akiya-api-rhlv.onrender.com/code?number=${number}`);
+                
+                if (!response.ok) throw new Error('Server Busy');
+
                 const data = await response.json();
 
                 if (data.code) {
-                    statusText.innerText = "YOUR PAIRING CODE:";
+                    statusText.innerText = "SUCCESS! YOUR PAIRING CODE IS:";
                     codeDisplay.innerText = data.code;
                     btn.innerText = "GET NEW CODE";
                 } else {
-                    statusText.innerText = "ERROR FROM SERVER";
+                    statusText.innerText = "SERVER RETURNED NO CODE. RETRYING...";
+                    btn.innerText = "RETRY";
                 }
             } catch (err) {
-                statusText.innerText = "FETCH ERROR!";
-                console.error(err);
+                // FETCH ERROR එක ආවොත් මෙතනින් අල්ලනවා
+                statusText.innerText = "FETCH ERROR! සර්වර් එක තාම නිදි වගේ. ආයේ ට්‍රයි කරපන්.";
+                console.error("Error Detail:", err);
+                btn.innerText = "TRY AGAIN";
             } finally {
                 btn.disabled = false;
             }
         }
     </script>
+
 </body>
 </html>
