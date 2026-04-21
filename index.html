@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKIYA 龍 - DASHBOARD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 0, 0, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 0, 0, 0.2); }
+        .red-glow { text-shadow: 0 0 15px rgba(255, 0, 0, 0.7); }
+    </style>
+</head>
+<body class="flex flex-col items-center py-10 px-5">
+
+    <div class="w-full max-w-md mb-8 rounded-3xl overflow-hidden border-2 border-red-600 shadow-[0_0_20px_rgba(255,0,0,0.3)]">
+        <img src="https://raw.githubusercontent.com/ඔයාගේ_Username/repo_name/main/logo2.png" alt="AKIYA Banner" class="w-full">
+    </div>
+
+    <div class="text-center mb-10">
+        <h1 class="text-4xl font-black red-glow tracking-tighter italic">𝐀𝐊𝐈𝐘𝐀 龍 ⚙️ - 𝙼𝙳</h1>
+        <p class="text-red-500 text-[10px] tracking-[0.3em] uppercase mt-2">Power Full WhatsApp Bot</p>
+    </div>
+
+    <div class="flex flex-col gap-6 w-full max-w-sm">
+        
+        <div class="glass p-8 rounded-[35px] text-center border-t-2 border-red-600">
+            <h3 class="text-xs uppercase tracking-widest text-gray-400 mb-2">Live Visitors</h3>
+            <div id="count" class="text-6xl font-bold text-red-600">00</div>
+        </div>
+
+        <div class="glass p-8 rounded-[35px] text-center border-b-2 border-red-600">
+            <h3 class="text-xs uppercase tracking-widest text-gray-400 mb-2">System Status</h3>
+            <div class="flex items-center justify-center gap-2">
+                <span class="h-3 w-3 bg-red-600 rounded-full animate-ping"></span>
+                <span class="text-2xl font-bold">ONLINE</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mt-10 text-[10px] text-gray-600 bg-white/5 p-4 rounded-xl border border-white/10 text-center">
+        <p class="mb-1 uppercase">Public Access Key</p>
+        <code class="text-red-400">aop4SIq1OjHZn_EW7</code>
+    </div>
+
+    <script>
+        function update() {
+            document.getElementById('count').innerText = Math.floor(Math.random() * 10 + 5).toString().padStart(2, '0');
+        }
+        setInterval(update, 3000);
+        update();
+    </script>
+</body>
+</html>
