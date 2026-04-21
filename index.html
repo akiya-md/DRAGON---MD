@@ -8,7 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .glass-card { background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(15px); border: 1px solid rgba(255, 0, 0, 0.1); transition: 0.4s; }
+        .glass-card { background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(15px); border: 1px solid rgba(255, 0, 0, 0.1); transition: 0.4s; cursor: pointer; }
         .glass-card:hover { border-color: #ff0000; transform: translateY(-10px); box-shadow: 0 0 30px rgba(255, 0, 0, 0.2); }
         .red-glow { text-shadow: 0 0 15px rgba(255, 0, 0, 0.8); }
         .master-trigger { opacity: 0.03; transition: 0.5s; cursor: pointer; padding: 20px; }
@@ -25,13 +25,13 @@
     </div>
 
     <div class="text-center mb-16">
-        <h1 class="text-6xl font-black red-glow italic uppercase tracking-tighter">AKIYA 龍 PORTAL</h1>
+        <h1 class="text-6xl font-black red-glow italic uppercase tracking-tighter">AKIYA 龍 ULTIMATE</h1>
         <p class="text-red-500 text-xs tracking-[0.5em] mt-4 uppercase font-bold">The Ultimate WhatsApp Automation</p>
     </div>
 
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 mb-20 px-4">
         
-        <div onclick="window.location.href='pairing.html'" class="glass-card p-12 rounded-[50px] text-center border-b-8 border-red-600 cursor-pointer group">
+        <div onclick="window.location.href='getcode.html'" class="glass-card p-12 rounded-[50px] text-center border-b-8 border-red-600 group">
             <div class="tab-icon group-hover:scale-110 transition duration-500">
                 <i class="fas fa-plug"></i>
             </div>
@@ -40,7 +40,7 @@
             <div class="mt-8 bg-red-600 text-white py-4 rounded-full font-black text-sm uppercase tracking-widest hover:bg-red-700 transition">CONNECT NOW</div>
         </div>
 
-        <div onclick="window.location.href='getcode.html'" class="glass-card p-12 rounded-[50px] text-center border-b-8 border-red-600 cursor-pointer group">
+        <div onclick="window.location.href='getcode.html'" class="glass-card p-12 rounded-[50px] text-center border-b-8 border-red-600 group">
             <div class="tab-icon group-hover:scale-110 transition duration-500">
                 <i class="fas fa-user-cog"></i>
             </div>
@@ -86,15 +86,13 @@
     <script>
     function verifyMaster() {
         let key = prompt("ENTER MASTER ACCESS KEY:");
-        
         if (key === "20241118") {
             alert("ACCESS GRANTED! WELCOME MASTER.");
-            // මෙන්න මෙතන මම කලින් settings.html දීලා තිබ්බේ. ඒක දැන් admin.html කළා.
             window.location.href = "admin.html"; 
         } else if (key !== null) {
             alert("ACCESS DENIED! YOU ARE NOT THE OWNER.");
         }
     }
-</script>
+    </script>
 </body>
 </html>
