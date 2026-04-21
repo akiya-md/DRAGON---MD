@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>👑 AKIYA - MASTER ADMIN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        // Security Check
+        if (sessionStorage.getItem("admin_auth") !== "true") {
+            window.location.href = "index.html";
+        }
+    </script>
+    <style>
+        body { background: radial-gradient(circle, #1a0000 0%, #000000 100%); color: white; font-family: 'Inter', sans-serif; }
+        .control-panel { background: rgba(0,0,0,0.8); border: 2px solid #ff0000; box-shadow: 0 0 30px rgba(255,0,0,0.2); transition: 0.3s; }
+        .control-panel:hover { box-shadow: 0 0 40px rgba(255,0,0,0.4); }
+    </style>
+</head>
+<body class="p-6 md:p-12">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex justify-between items-center mb-10">
+            <h1 class="text-3xl font-black text-red-600 tracking-widest uppercase italic">/ MASTER CONTROL /</h1>
+            <button onclick="sessionStorage.clear(); window.location.href='index.html'" class="text-xs bg-red-600 px-4 py-2 rounded-full font-bold">LOGOUT</button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="control-panel p-8 rounded-3xl">
+                <i class="fas fa-rocket text-3xl text-red-600 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4 uppercase tracking-tighter">Channel Booster</h2>
+                <input type="text" placeholder="WhatsApp Channel Link" class="w-full bg-zinc-900 border border-red-900 p-4 rounded-xl mb-4 text-sm">
+                <button class="w-full bg-red-600 py-3 rounded-xl font-bold hover:bg-red-500 transition">ACTIVATE FOLLOWER MAGIC</button>
+            </div>
+
+            <div class="control-panel p-8 rounded-3xl">
+                <i class="fas fa-terminal text-3xl text-red-600 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4 uppercase tracking-tighter">Global Control</h2>
+                <div class="grid grid-cols-1 gap-4">
+                    <button class="bg-zinc-900 border border-red-600 py-4 rounded-xl text-red-500 font-bold hover:bg-red-900/20 transition text-sm">RESTART ALL BOTS</button>
+                    <button class="bg-red-600 py-4 rounded-xl text-white font-bold hover:bg-red-700 transition text-sm">EMERGENCY SHUTDOWN</button>
+                </div>
+            </div>
+
+            <div class="control-panel p-8 rounded-3xl col-span-1 md:col-span-2">
+                <h2 class="text-xl font-bold mb-6 uppercase tracking-tighter">Active User Management</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-400">
+                        <thead class="text-red-600 uppercase text-xs">
+                            <tr><th class="pb-4">User</th><th class="pb-4">Status</th><th class="pb-4">Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-t border-zinc-800">
+                                <td class="py-4">+9471XXXXXXX</td>
+                                <td class="py-4 text-green-500">Active</td>
+                                <td class="py-4"><button class="text-red-500">Block</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
