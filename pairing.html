@@ -65,9 +65,8 @@
             codeDisplay.innerText = "";
 
             try {
-                // 3. API Call to Render
-                // මම ඔයාගේ Render Link එක මෙතනට දැම්මා
-                const response = await fetch(`https://akiya-api-rhlv.onrender.com/pair?number=${number}`);
+                // 3. API Call (අලුත් /code ලින්ක් එක මම මෙතනට දැම්මා)
+                const response = await fetch(`https://akiya-api-rhlv.onrender.com/code?number=${number}`);
                 const data = await response.json();
 
                 if (data.code) {
