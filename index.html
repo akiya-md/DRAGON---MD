@@ -6,100 +6,97 @@
     <title>AKIYA 龍 - SYSTEM PORTAL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <style>
-        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; }
-        .glass-card { background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(15px); border: 1px solid rgba(255, 0, 0, 0.1); transition: 0.3s; }
-        .glass-card:hover { border-color: #ff0000; transform: translateY(-5px); box-shadow: 0 0 25px rgba(255, 0, 0, 0.2); }
-        .red-glow { text-shadow: 0 0 15px rgba(255, 0, 0, 0.7); }
-        .master-access { opacity: 0.05; transition: 0.5s; cursor: pointer; }
-        .master-access:hover { opacity: 1; color: #ff0000; }
+        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .glass-card { background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(15px); border: 1px solid rgba(255, 0, 0, 0.1); transition: 0.4s; }
+        .glass-card:hover { border-color: #ff0000; transform: translateY(-10px); box-shadow: 0 0 30px rgba(255, 0, 0, 0.2); }
+        .red-glow { text-shadow: 0 0 15px rgba(255, 0, 0, 0.8); }
+        .master-trigger { opacity: 0.03; transition: 0.5s; cursor: pointer; padding: 20px; }
+        .master-trigger:hover { opacity: 1; color: #ff0000; text-shadow: 0 0 10px red; }
+        .tab-icon { font-size: 4rem; margin-bottom: 1.5rem; color: #ff0000; }
     </style>
 </head>
 <body class="bg-black min-h-screen pb-10 px-4">
 
-    <div class="max-w-4xl mx-auto mt-6 mb-10">
-        <div class="rounded-3xl overflow-hidden border-2 border-red-600 shadow-[0_0_30px_rgba(255,0,0,0.4)]">
+    <div class="max-w-4xl mx-auto mt-8 mb-12">
+        <div class="rounded-[40px] overflow-hidden border-2 border-red-600 shadow-[0_0_40px_rgba(255,0,0,0.5)]">
             <img src="https://raw.githubusercontent.com/akiya-md/DRAGON---MD/main/logo2.png" alt="AKIYA Banner" class="w-full">
         </div>
     </div>
 
-    <div class="text-center mb-12">
-        <h1 class="text-5xl font-black red-glow italic uppercase tracking-tighter italic">AKIYA 龍 PORTAL</h1>
-        <p class="text-red-500 text-xs tracking-[0.4em] mt-3 uppercase font-bold">Unlimited WhatsApp Power</p>
+    <div class="text-center mb-16">
+        <h1 class="text-6xl font-black red-glow italic uppercase tracking-tighter">AKIYA 龍 PORTAL</h1>
+        <p class="text-red-500 text-xs tracking-[0.5em] mt-4 uppercase font-bold">The Ultimate WhatsApp Automation</p>
     </div>
 
-    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 mb-20 px-4">
         
-        <div onclick="window.location.href='pairing.html'" class="glass-card p-10 rounded-[45px] text-center border-b-4 border-red-600 cursor-pointer group">
-            <i class="fas fa-qrcode text-6xl text-red-600 mb-6 group-hover:scale-110 transition"></i>
-            <h2 class="text-3xl font-black italic uppercase mb-2">GET BOT CODE</h2>
-            <p class="text-gray-400 text-sm">Connect your WhatsApp via Pairing Code instantly.</p>
-            <div class="mt-6 bg-red-600 text-white py-3 rounded-full font-bold text-xs uppercase tracking-widest">START CONNECTION</div>
+        <div onclick="window.location.href='pairing.html'" class="glass-card p-12 rounded-[50px] text-center border-b-8 border-red-600 cursor-pointer group">
+            <div class="tab-icon group-hover:scale-110 transition duration-500">
+                <i class="fas fa-plug"></i>
+            </div>
+            <h2 class="text-4xl font-black italic uppercase mb-4">GET BOT CODE</h2>
+            <p class="text-gray-400 text-base leading-relaxed">Connect your WhatsApp instantly using a Pairing Code. Fast, secure, and easy setup.</p>
+            <div class="mt-8 bg-red-600 text-white py-4 rounded-full font-black text-sm uppercase tracking-widest hover:bg-red-700 transition">CONNECT NOW</div>
         </div>
 
-        <div onclick="window.location.href='settings.html'" class="glass-card p-10 rounded-[45px] text-center border-b-4 border-red-600 cursor-pointer group">
-            <i class="fas fa-user-lock text-6xl text-red-600 mb-6 group-hover:scale-110 transition"></i>
-            <h2 class="text-3xl font-black italic uppercase mb-2">USER PANEL</h2>
-            <p class="text-gray-400 text-sm">Login with your number to manage bot settings.</p>
-            <div class="mt-6 border border-red-600 text-red-600 py-3 rounded-full font-bold text-xs uppercase tracking-widest">OPEN SETTINGS</div>
+        <div onclick="window.location.href='settings.html'" class="glass-card p-12 rounded-[50px] text-center border-b-8 border-red-600 cursor-pointer group">
+            <div class="tab-icon group-hover:scale-110 transition duration-500">
+                <i class="fas fa-user-cog"></i>
+            </div>
+            <h2 class="text-4xl font-black italic uppercase mb-4">USER PANEL</h2>
+            <p class="text-gray-400 text-base leading-relaxed">Manage your Auto-React, Call Block, and Anti-Link features from your personal dashboard.</p>
+            <div class="mt-8 border-2 border-red-600 text-red-600 py-4 rounded-full font-black text-sm uppercase tracking-widest hover:bg-red-600 hover:text-white transition">OPEN SETTINGS</div>
         </div>
 
     </div>
 
-    <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
-        <div class="glass-card p-4 rounded-3xl text-center">
-            <i class="fas fa-download text-red-600 mb-2"></i>
-            <p class="text-[10px] font-bold uppercase">Downloads</p>
+    <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 mb-24">
+        <div class="glass-card p-6 rounded-[30px] text-center">
+            <i class="fas fa-bolt text-red-600 text-2xl mb-3"></i>
+            <h4 class="text-[10px] font-black uppercase tracking-widest">High Speed</h4>
         </div>
-        <div class="glass-card p-4 rounded-3xl text-center">
-            <i class="fas fa-shield-alt text-red-600 mb-2"></i>
-            <p class="text-[10px] font-bold uppercase">Anti-Link</p>
+        <div class="glass-card p-6 rounded-[30px] text-center">
+            <i class="fas fa-shield-virus text-red-600 text-2xl mb-3"></i>
+            <h4 class="text-[10px] font-black uppercase tracking-widest">Anti-Ban</h4>
         </div>
-        <div class="glass-card p-4 rounded-3xl text-center">
-            <i class="fas fa-robot text-red-600 mb-2"></i>
-            <p class="text-[10px] font-bold uppercase">AI Search</p>
+        <div class="glass-card p-6 rounded-[30px] text-center">
+            <i class="fas fa-cloud-download-alt text-red-600 text-2xl mb-3"></i>
+            <h4 class="text-[10px] font-black uppercase tracking-widest">Auto Downloader</h4>
         </div>
-        <div class="glass-card p-4 rounded-3xl text-center">
-            <i class="fas fa-phone-slash text-red-600 mb-2"></i>
-            <p class="text-[10px] font-bold uppercase">Call Block</p>
-        </div>
-    </div>
-
-    <div class="text-center mb-20">
-        <div class="inline-block glass-card px-6 py-3 rounded-full">
-            <img src="https://counter9.stat.ovh/private/freecounterstat.php?c=89e9mql7u5nylcl7u8rlybcl7mxlcl7u" alt="counter" class="opacity-80">
+        <div class="glass-card p-6 rounded-[30px] text-center">
+            <i class="fas fa-headset text-red-600 text-2xl mb-3"></i>
+            <h4 class="text-[10px] font-black uppercase tracking-widest">24/7 Online</h4>
         </div>
     </div>
 
-    <div class="text-center mt-20">
-        <div onclick="masterLogin()" class="master-access text-[9px] font-black uppercase tracking-[0.5em]">
-            <i class="fas fa-fingerprint mr-2"></i> Master Access Only
+    <div class="text-center mb-32">
+        <div class="inline-block glass-card px-8 py-4 rounded-full border border-red-900/30">
+            <p class="text-[9px] uppercase tracking-[0.3em] text-gray-500 mb-2">Live System Visitors</p>
+            <img src="https://counter9.stat.ovh/private/freecounterstat.php?c=89e9mql7u5nylcl7u8rlybcl7mxlcl7u" alt="visitor counter" class="mx-auto opacity-90">
+        </div>
+    </div>
+
+    <div class="flex justify-center mt-20">
+        <div onclick="verifyMaster()" class="master-trigger text-[10px] font-black uppercase tracking-[0.6em]">
+            <i class="fas fa-fingerprint mr-2"></i> Master Access
         </div>
     </div>
 
     <script>
-        // Firebase Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyAs-TemporaryKey",
-            authDomain: "akiya-bot-auth.firebaseapp.com",
-            projectId: "akiya-bot-auth",
-        };
-        firebase.initializeApp(firebaseConfig);
-
-        function masterLogin() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup(provider).then((result) => {
-                if (result.user.email === "kaviakiya@gmail.com") {
-                    alert("ACCESS GRANTED, MASTER AKIYA!");
-                    window.location.href = "admin.html"; // රහස් ඇඩ්මින් පේජ් එකට යනවා
-                } else {
-                    alert("Unauthorized Access!");
-                    firebase.auth().signOut();
-                }
-            }).catch(() => { alert("Login Error!"); });
+        function verifyMaster() {
+            // මචං මේක තමයි උඹේ රහස් පාස්වර්ඩ් එක
+            let key = prompt("20241118:");
+            
+            if (key === "akiya@2026") {
+                alert("ACCESS GRANTED! WELCOME MASTER.");
+                // මෙතනට පස්සේ අපි ඇඩ්මින් පැනල් එකේ ලින්ක් එක දාමු
+                window.location.href = "settings.html"; 
+            } else if (key !== null) {
+                alert("ACCESS DENIED! YOU ARE NOT THE OWNER.");
+            }
         }
     </script>
+
 </body>
 </html>
