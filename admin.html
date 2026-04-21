@@ -2,85 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>👑 AKIYA - MASTER ADMIN</title>
+    <title>👑 AKIYA - MASTER ADMIN PANEL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { background: radial-gradient(circle, #1a0000 0%, #000000 100%); color: white; font-family: 'Inter', sans-serif; min-h-screen; }
-        .admin-card { background: rgba(0, 0, 0, 0.7); border: 2px solid #ff0000; box-shadow: 0 0 30px rgba(255, 0, 0, 0.2); backdrop-filter: blur(10px); transition: 0.3s; }
-        .admin-card:hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(255, 0, 0, 0.4); }
-        .neon-text { text-shadow: 0 0 10px #ff0000; }
+        body { background: radial-gradient(circle, #1a0000 0%, #000000 100%); color: white; font-family: 'Inter', sans-serif; }
+        .admin-card { background: rgba(0, 0, 0, 0.7); border: 2px solid #ff0000; box-shadow: 0 0 30px rgba(255, 0, 0, 0.2); backdrop-filter: blur(10px); }
     </style>
 </head>
-<body class="p-4 md:p-10">
-
-    <div class="flex justify-between items-center mb-12 border-b-2 border-red-600 pb-6">
-        <div>
-            <h1 class="text-4xl font-black neon-text italic uppercase tracking-widest">MASTER CONTROL</h1>
-            <p class="text-red-500 text-[10px] uppercase font-bold tracking-[0.3em]">Akiya System Brain v2.0</p>
-        </div>
-        <button onclick="window.location.href='index.html'" class="bg-red-600 px-6 py-2 rounded-full font-bold text-xs hover:bg-red-700">LOGOUT</button>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-        <div class="lg:col-span-2 admin-card p-8 rounded-[40px]">
-            <h3 class="text-xl font-bold mb-6 italic uppercase"><i class="fas fa-chart-line mr-2"></i> Global Live Growth</h3>
-            <canvas id="liveChart" height="150"></canvas>
-        </div>
+<body class="p-10">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-4xl font-black text-red-600 mb-10 italic uppercase tracking-widest">/ MASTER BRAIN /</h1>
         
-        <div class="space-y-6">
-            <div class="admin-card p-6 rounded-[30px] flex items-center justify-between">
-                <div><p class="text-gray-500 text-xs uppercase">Total Bots</p><p class="text-3xl font-black text-red-600">1,284</p></div>
-                <i class="fas fa-robot text-3xl text-zinc-800"></i>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="md:col-span-2 admin-card p-8 rounded-[40px]">
+                <h3 class="text-xl font-bold mb-6 italic uppercase underline decoration-red-600">Global Live Growth</h3>
+                <canvas id="liveChart" height="150"></canvas>
             </div>
-            <div class="admin-card p-6 rounded-[30px] flex items-center justify-between">
-                <div><p class="text-gray-500 text-xs uppercase">Active Users</p><p class="text-3xl font-black text-red-600">5.4K</p></div>
-                <i class="fas fa-users text-3xl text-zinc-800"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        
-        <div class="admin-card p-8 rounded-[40px]">
-            <h3 class="text-xl font-bold mb-6 italic uppercase text-red-500"><i class="fas fa-rocket mr-2"></i> Channel Booster</h3>
-            <p class="text-gray-500 text-xs mb-4">Paste the WhatsApp Channel link below to boost followers.</p>
-            <input type="text" placeholder="https://whatsapp.com/channel/..." class="w-full bg-zinc-900 border border-red-900/50 p-4 rounded-2xl outline-none text-sm mb-4">
-            <button class="w-full bg-red-600 py-4 rounded-2xl font-black uppercase text-xs hover:shadow-[0_0_20px_rgba(255,0,0,0.5)]">ACTIVATE MAGIC BOOST</button>
-        </div>
-
-        <div class="admin-card p-8 rounded-[40px]">
-            <h3 class="text-xl font-bold mb-6 italic uppercase text-red-500"><i class="fas fa-broadcast-tower mr-2"></i> Central Control</h3>
-            <div class="grid grid-cols-2 gap-4">
-                <button class="bg-zinc-900 border border-red-600 p-6 rounded-2xl flex flex-col items-center gap-2 hover:bg-red-600/10">
-                    <i class="fas fa-sync-alt text-xl"></i>
-                    <span class="text-[10px] font-bold uppercase tracking-widest">Restart All</span>
-                </button>
-                <button class="bg-zinc-900 border border-red-600 p-6 rounded-2xl flex flex-col items-center gap-2 hover:bg-red-600/10">
-                    <i class="fas fa-power-off text-xl"></i>
-                    <span class="text-[10px] font-bold uppercase tracking-widest">Global Stop</span>
-                </button>
+            <div class="space-y-4">
+                <div class="admin-card p-6 rounded-3xl text-center">
+                    <p class="text-gray-500 text-xs uppercase">Total Bots</p>
+                    <p class="text-4xl font-black text-red-600">1,284</p>
+                </div>
+                <div class="admin-card p-6 rounded-3xl text-center">
+                    <p class="text-gray-500 text-xs uppercase">Server Load</p>
+                    <p class="text-4xl font-black text-green-500 text-shadow-glow">12%</p>
+                </div>
             </div>
         </div>
 
-        <div class="md:col-span-2 admin-card p-8 rounded-[40px]">
-            <h3 class="text-xl font-bold mb-6 italic uppercase"><i class="fas fa-user-shield mr-2"></i> User Management</h3>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <thead class="text-red-600 uppercase text-xs border-b border-zinc-800">
-                        <tr><th class="pb-4">User ID</th><th class="pb-4">Bot Status</th><th class="pb-4">Last Active</th><th class="pb-4">Action</th></tr>
-                    </thead>
-                    <tbody class="text-sm text-gray-400">
-                        <tr class="border-b border-zinc-900/50">
-                            <td class="py-4 font-mono">+94712345678</td>
-                            <td class="py-4 text-green-500 font-bold">ONLINE</td>
-                            <td class="py-4 italic">Just now</td>
-                            <td class="py-4"><button class="bg-zinc-800 px-3 py-1 rounded text-red-500 text-[10px] font-bold">BAN USER</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="admin-card p-8 rounded-[40px]">
+                <h3 class="text-xl font-bold mb-4 italic uppercase"><i class="fas fa-rocket mr-2"></i> Channel Booster</h3>
+                <input type="text" placeholder="Channel Link" class="w-full bg-zinc-900 border border-red-900 p-4 rounded-xl mb-4 text-sm">
+                <button class="w-full bg-red-600 py-3 rounded-xl font-black uppercase text-xs">Boost Followers</button>
+            </div>
+
+            <div class="admin-card p-8 rounded-[40px]">
+                <h3 class="text-xl font-bold mb-4 italic uppercase"><i class="fas fa-broadcast-tower mr-2"></i> Central Control</h3>
+                <div class="flex gap-4">
+                    <button class="flex-1 bg-zinc-800 p-4 rounded-xl text-red-500 font-bold border border-red-900 text-[10px]">RESTART ALL</button>
+                    <button class="flex-1 bg-red-600 p-4 rounded-xl text-white font-bold text-[10px]">GLOBAL SHUTDOWN</button>
+                </div>
             </div>
         </div>
     </div>
@@ -90,20 +54,15 @@
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['1PM', '2PM', '3PM', '4PM', '5PM', '6PM'],
+                labels: ['12PM', '1PM', '2PM', '3PM', '4PM', '5PM'],
                 datasets: [{
-                    label: 'Active Bots',
-                    data: [400, 650, 500, 900, 1100, 1284],
+                    label: 'Live Bots',
+                    data: [100, 300, 200, 800, 1100, 1284],
                     borderColor: '#ff0000',
                     backgroundColor: 'rgba(255, 0, 0, 0.1)',
                     fill: true,
                     tension: 0.4
                 }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: false } },
-                scales: { y: { grid: { color: '#1a1a1a' } }, x: { grid: { display: false } } }
             }
         });
     </script>
