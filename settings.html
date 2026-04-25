@@ -21,7 +21,7 @@
 
         .header { text-align: center; margin-bottom: 40px; }
         .header img { width: 110px; border-radius: 50%; border: 3px solid var(--neon-red); filter: drop-shadow(0 0 15px red); }
-        .header h1 { font-size: 28px; letter-spacing: 4px; margin-top: 15px; text-shadow: 0 0 10px red; color: #fff; }
+        .header h1 { font-size: 28px; letter-spacing: 4px; margin-top: 15px; text-shadow: 0 0 10px red; }
 
         .section { 
             background: rgba(25, 25, 25, 0.7); padding: 25px; border-radius: 15px; 
@@ -29,7 +29,6 @@
         }
         .section h3 { color: var(--neon-red); font-size: 16px; margin-bottom: 20px; border-left: 4px solid red; padding-left: 12px; }
 
-        /* Switches & Controls */
         .control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .switch-box { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #222; }
         .switch-box span { font-size: 13px; color: #ccc; }
@@ -41,8 +40,15 @@
         input:checked + .slider { background-color: var(--neon-red); box-shadow: 0 0 10px red; }
         input:checked + .slider:before { transform: translateX(26px); }
 
-        .input-field { width: 100%; background: #000; border: 1px solid #444; color: #fff; padding: 12px; border-radius: 8px; font-family: 'Orbitron'; outline: none; margin-top: 10px; font-size: 12px; }
+        .input-field { width: 100%; background: #000; border: 1px solid #444; color: #fff; padding: 12px; border-radius: 8px; font-family: 'Orbitron'; outline: none; margin-top: 10px; font-size: 12px; box-sizing: border-box; }
         .input-field:focus { border-color: var(--neon-red); box-shadow: 0 0 8px red; }
+
+        /* Auto Reply Styling */
+        .reply-slot { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #333; }
+        .reply-label { font-size: 10px; color: #888; margin-bottom: 5px; }
+
+        .add-btn { background: transparent; border: 1px dashed var(--neon-red); color: var(--neon-red); padding: 10px; width: 100%; cursor: pointer; margin-top: 10px; border-radius: 8px; transition: 0.3s; }
+        .add-btn:hover { background: rgba(255, 0, 0, 0.1); }
 
         .tag-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
         .tag-item { background: #111; border: 1px solid #444; padding: 8px 12px; border-radius: 5px; font-size: 11px; display: flex; align-items: center; gap: 8px; }
@@ -50,7 +56,7 @@
         .save-btn { 
             width: 100%; padding: 20px; background: linear-gradient(90deg, #800, #f00, #800);
             background-size: 200% auto; color: #fff; font-weight: bold; border: none; 
-            cursor: pointer; border-radius: 10px; font-size: 18px; letter-spacing: 3px; transition: 0.5s;
+            cursor: pointer; border-radius: 10px; font-size: 18px; letter-spacing: 3px; transition: 0.5s; margin-top: 20px;
         }
         .save-btn:hover { background-position: right center; box-shadow: 0 0 40px red; transform: scale(1.02); }
     </style>
@@ -63,7 +69,7 @@
 <div class="main-container">
     <div class="header">
         <img src="logo.png" alt="AKIYA 龍">
-        <h1>𝐀𝐊𝐈𝐘𝐀 龍 ⚙️ - 𝙼𝙳 ◈|⚜️</h1>
+        <h1>𝐀𝐊𝐈𝐘𝐀 龍 ⚙️- 𝙼𝙳 ◈|⚜️</h1>
     </div>
 
     <div class="section">
@@ -75,21 +81,32 @@
     </div>
 
     <div class="section">
+        <h3>Auto-Reply System (Max 20 Slots)</h3>
+        <div id="replyContainer">
+            <div class="reply-slot">
+                <div><div class="reply-label">Keyword</div><input type="text" class="input-field" placeholder=".hi"></div>
+                <div><div class="reply-label">Response</div><input type="text" class="input-field" placeholder="Hello Boss!"></div>
+            </div>
+        </div>
+        <button class="add-btn" onclick="addSlot()">+ ADD NEW AUTO-REPLY SLOT</button>
+    </div>
+
+    <div class="section">
         <h3>Status & Reaction Protocols</h3>
         <div class="control-grid">
             <div class="switch-box"><span>Always Online</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
             <div class="switch-box"><span>Auto Status Seen</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
             <div class="switch-box"><span>Status Auto Like</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
             <div class="switch-box"><span>Status Mention React</span> <label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-            <div class="switch-box"><span>Auto React (All)</span> <label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
             <div class="switch-box"><span>Call Blocker</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+            <div class="switch-box"><span>Auto React (All)</span> <label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
         </div>
     </div>
 
     <div class="section">
         <h3>Defensive Protocols</h3>
         <div class="switch-box"><span>Bad Words Filter</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-        <textarea class="input-field" rows="2" placeholder="Enter Banned Words (comma separated)..."></textarea>
+        <textarea class="input-field" rows="2" placeholder="Bad Words (e.g. word1, word2)..."></textarea>
         <div class="switch-box" style="margin-top:15px;"><span>Anti-18+ Video Delete</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
     </div>
 
@@ -101,14 +118,13 @@
             <div class="tag-item"><input type="checkbox" checked> Facebook</div>
             <div class="tag-item"><input type="checkbox" checked> YouTube</div>
             <div class="tag-item"><input type="checkbox" checked> TikTok</div>
-            <div class="tag-item"><input type="checkbox"> Other Links</div>
         </div>
     </div>
 
     <div class="section">
         <h3>Overlord Group Management</h3>
         <div class="switch-box"><span>Group Warn System</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-        <p style="font-size: 11px; color: #888;">Rule Break Action: <b>3 Warnings -> Auto Kick</b></p>
+        <p style="font-size: 11px; color: #888;">Rule Break: <b>3 Warnings -> Kick</b></p>
         <select class="input-field">
             <option>3 Warnings then Kick</option>
             <option>1 Warning then Ban</option>
@@ -116,11 +132,25 @@
         </select>
     </div>
 
-    <button class="save-btn" onclick="triggerSync()"></button>
+    <button class="save-btn" onclick="triggerSync()">𝙎𝘼𝙑𝙀 𝙎𝙀𝙏𝙏𝙄𝙉𝙂 ◈|</button>
 </div>
 
 <script>
-    // --- FIRE PARTICLES (No Lag) ---
+    let slotCount = 1;
+    function addSlot() {
+        if (slotCount < 20) {
+            const container = document.getElementById('replyContainer');
+            const newSlot = document.createElement('div');
+            newSlot.className = 'reply-slot';
+            newSlot.innerHTML = `
+                <div><input type="text" class="input-field" placeholder="Keyword"></div>
+                <div><input type="text" class="input-field" placeholder="Response"></div>
+            `;
+            container.appendChild(newSlot);
+            slotCount++;
+        } else { alert("අයියේ උපරිම 20යි පුළුවන්!"); }
+    }
+
     const canvas = document.getElementById('fireCanvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -142,7 +172,7 @@
     init(); animate();
 
     function triggerSync() {
-        alert("අයියේ.. ඔක්කොම ඩේටා ටික Cloud Server එකට සේව් වුණා! 🔥🐉");
+        alert("ඔන්න අයියේ ඔක්කොම ටික පට්ටට සේව් වුණා! 🔥🐉");
     }
 </script>
 
