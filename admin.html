@@ -8,7 +8,7 @@
     <style>
         body { background-color: #0a0a0a; color: #ffffff; font-family: sans-serif; margin: 0; padding: 20px; }
         
-        /* Login Overlay */
+        
         #login-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #050505; display: flex; justify-content: center; align-items: center; z-index: 1000;
@@ -26,7 +26,7 @@
         /* Admin Content (Hidden by default) */
         #admin-content { display: none; }
 
-        /* Styles from previous admin layout */
+        
         .header { text-align: center; border-bottom: 2px solid #ff0000; padding-bottom: 20px; margin-bottom: 30px; }
         .banner { width: 100%; max-width: 600px; border-radius: 15px; box-shadow: 0 0 20px #ff0000; }
         .card { background: #111; border: 1px solid #ff0000; padding: 20px; border-radius: 15px; width: 200px; text-align: center; margin: 10px; display: inline-block; }
@@ -76,25 +76,25 @@
     <script>
         function checkAuth() {
             const inputPass = document.getElementById('admin-pass').value;
-            const masterPass = "QWtpbmR1QERld3NoYW4yMDI0MTExOA=="; 
+            const masterPass = "Akindu@Dewshan20241118"; 
 
             if (inputPass === masterPass) {
-                // පැනල් එක පෙන්වනවා
+               
                 document.getElementById('login-overlay').style.display = 'none';
                 document.getElementById('admin-content').style.display = 'block';
                 
-                // Session එක සේව් කරනවා
+                
                 sessionStorage.setItem("admin_auth", "true");
                 console.log("Login Success!");
             } else {
-                // වැරදි නම් පෙන්වන මැසේජ් එක
+                
                 document.getElementById('error-msg').style.display = 'block';
                 document.getElementById('admin-pass').value = "";
                 alert("Wrong Password! Please try again.");
             }
         }
 
-        // පේජ් එක Refresh කළොත් ආයෙත් බලනවා
+        
         window.addEventListener('load', function() {
             if (sessionStorage.getItem("admin_auth") === "true") {
                 document.getElementById('login-overlay').style.display = 'none';
