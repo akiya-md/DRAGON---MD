@@ -3,29 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKIYA 龍 MD | CRONTROL PANNEL PRO</title>
+    <title>AKIYA 龍 MD | CONTROL PANNEL</title>
     <style>
         :root { --neon-red: #ff0000; --dark-bg: #020202; }
         body { 
-            background: var(--dark-bg); 
-            color: #fff; 
-            font-family: 'Orbitron', sans-serif; 
-            margin: 0; 
-            overflow-x: hidden;
-            display: flex; flex-direction: column; align-items: center;
+            background: var(--dark-bg); color: #fff; font-family: 'Orbitron', sans-serif; 
+            margin: 0; overflow-x: hidden; display: flex; flex-direction: column; align-items: center;
         }
-
-        /* Fire Particles Canvas */
         #fireCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
 
         .main-container { 
-            width: 95%; max-width: 800px; 
-            margin: 40px 0; 
-            background: rgba(15, 15, 15, 0.8); 
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--neon-red); 
-            border-radius: 20px; 
-            padding: 40px; 
+            width: 95%; max-width: 900px; margin: 40px 0; 
+            background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(15px);
+            border: 2px solid var(--neon-red); border-radius: 20px; padding: 40px; 
             box-shadow: 0 0 50px rgba(255, 0, 0, 0.3);
         }
 
@@ -33,36 +23,33 @@
         .header img { width: 120px; border-radius: 50%; border: 4px solid var(--neon-red); filter: drop-shadow(0 0 15px red); }
         .header h1 { font-size: 32px; letter-spacing: 5px; margin-top: 20px; text-shadow: 0 0 10px red; }
 
-        /* Full Width Sections */
         .section { 
-            background: rgba(30, 30, 30, 0.6); 
-            padding: 30px; 
-            border-radius: 15px; 
-            border: 1px solid #444; 
-            margin-bottom: 30px; 
-            transition: 0.5s;
-            width: 100%; box-sizing: border-box;
+            background: rgba(30, 30, 30, 0.6); padding: 30px; border-radius: 15px; 
+            border: 1px solid #444; margin-bottom: 30px; transition: 0.5s; width: 100%; box-sizing: border-box;
         }
         .section:hover { border-color: var(--neon-red); background: rgba(40, 10, 10, 0.4); }
         .section h3 { color: var(--neon-red); font-size: 18px; margin-bottom: 25px; border-left: 5px solid red; padding-left: 15px; }
 
-        /* Advanced Switches */
+        /* Auto Reply Table Styling */
+        .reply-container { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .reply-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; padding: 10px; border-bottom: 1px solid #333; }
+        .reply-label { font-size: 10px; color: #888; margin-bottom: 5px; display: block; }
+
         .switch-box { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #222; }
         .switch { position: relative; width: 60px; height: 28px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #222; transition: .4s; border-radius: 34px; border: 1px solid #555; }
         .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 3px; background-color: #fff; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--neon-red); box-shadow: 0 0 15px red; border-color: red; }
+        input:checked + .slider { background-color: var(--neon-red); box-shadow: 0 0 15px red; }
         input:checked + .slider:before { transform: translateX(30px); background-color: #000; }
 
-        .input-field { width: 100%; background: #000; border: 1px solid #444; color: #fff; padding: 15px; border-radius: 8px; margin-top: 10px; font-family: 'Orbitron'; outline: none; transition: 0.3s; }
+        .input-field { width: 100%; background: #000; border: 1px solid #444; color: #fff; padding: 12px; border-radius: 8px; font-family: 'Orbitron'; outline: none; transition: 0.3s; box-sizing: border-box; }
         .input-field:focus { border-color: var(--neon-red); box-shadow: 0 0 10px red; }
 
         .save-btn { 
-            width: 100%; padding: 25px; 
-            background: linear-gradient(90deg, #600, #f00, #600);
-            background-size: 200% auto;
-            color: #fff; font-weight: bold; border: none; cursor: pointer; border-radius: 12px; font-size: 20px; letter-spacing: 5px; transition: 0.5s; 
+            width: 100%; padding: 25px; background: linear-gradient(90deg, #600, #f00, #600);
+            background-size: 200% auto; color: #fff; font-weight: bold; border: none; 
+            cursor: pointer; border-radius: 12px; font-size: 20px; letter-spacing: 5px; transition: 0.5s; 
         }
         .save-btn:hover { background-position: right center; box-shadow: 0 0 50px red; transform: translateY(-5px); }
     </style>
@@ -75,53 +62,60 @@
 <div class="main-container">
     <div class="header">
         <img src="logo.png" alt="AKIYA 龍">
-        <h1>DRAGON CORE v4.0</h1>
+        <h1>𝐀𝐊𝐈𝐘𝐀 龍 ⚙️ - 𝙼𝙳 ◈|⚜️🏷️</h1>
     </div>
 
     <div class="section">
-        <h3>User Core Identity</h3>
-        <input type="text" class="input-field" placeholder="Owner Name">
-        <input type="number" class="input-field" placeholder="Bot Age Limit">
+        <h3>AI Smart Auto-Reply (Max 20)</h3>
+        <div id="replyList">
+            <div class="reply-row">
+                <div>
+                    <span class="reply-label">Keyword (e.g. 'Hi')</span>
+                    <input type="text" class="input-field" placeholder="User says...">
+                </div>
+                <div>
+                    <span class="reply-label">Bot Response</span>
+                    <input type="text" class="input-field" placeholder="Bot replies...">
+                </div>
+            </div>
+        </div>
+        <button onclick="addReplyRow()" style="background: #222; color: #ff0000; border: 1px dashed red; padding: 10px; width: 100%; cursor: pointer; margin-top: 10px; font-family: 'Orbitron';">+ ADD NEW SLOT</button>
     </div>
 
     <div class="section">
-        <h3>Logic Automation</h3>
-        <div class="switch-box"><span>Always Online System</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-        <div class="switch-box"><span>Auto Status Mirroring</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-        <div class="switch-box"><span>Instant Status React</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-        <div class="switch-box"><span>Ghost Mode (No Blue Tick)</span> <label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <h3>Automation & Defensive</h3>
+        <div class="switch-box"><span>Auto Online Mode</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="switch-box"><span>Auto Call Block</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="switch-box"><span>Anti-Link Shield</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
     </div>
 
-    <div class="section">
-        <h3>Security Protocols</h3>
-        <div class="switch-box"><span>Global Call Blocker</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-        <div class="switch-box"><span>Bad Words Auto-Delete</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-        <input type="text" class="input-field" placeholder="Custom Banned Words (Split with , )">
-        <div class="switch-box" style="margin-top:20px;"><span>Anti-18+ AI Scanner</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-    </div>
-
-    <div class="section">
-        <h3>Overlord Group Management</h3>
-        <div class="switch-box"><span>Master Anti-Link</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-        <div class="switch-box"><span>Group Rules Warning</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-        <label style="font-size: 12px; margin-top: 15px; display: block;">Warn System Action</label>
-        <select class="input-field">
-            <option>3 Warnings then Kick</option>
-            <option>1 Warning then Ban</option>
-            <option>Instant Termination</option>
-        </select>
-    </div>
-
-    <button class="save-btn" onclick="triggerSync()">SYNC DRAGON ENGINE</button>
+    <button class="save-btn" onclick="triggerSync()">SYNC DRAGON CORE</button>
 </div>
 
 <script>
-    // --- FIRE PARTICLE SYSTEM ---
+    // --- Auto Reply Slot Manager ---
+    let replyCount = 1;
+    function addReplyRow() {
+        if (replyCount < 20) {
+            const container = document.getElementById('replyList');
+            const row = document.createElement('div');
+            row.className = 'reply-row';
+            row.innerHTML = `
+                <div><input type="text" class="input-field" placeholder="Keyword"></div>
+                <div><input type="text" class="input-field" placeholder="Response"></div>
+            `;
+            container.appendChild(row);
+            replyCount++;
+        } else {
+            alert("Maximum 20 Auto-Reply Slots Reached!");
+        }
+    }
+
+    // --- Fire Particles ---
     const canvas = document.getElementById('fireCanvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
     let particles = [];
     class Particle {
         constructor() {
@@ -129,33 +123,17 @@
             this.y = canvas.height + Math.random() * 100;
             this.size = Math.random() * 3 + 1;
             this.speedY = Math.random() * 3 + 1;
-            this.color = 'rgba(255, ' + Math.floor(Math.random() * 100) + ', 0, 0.8)';
+            this.color = `rgba(255, ${Math.floor(Math.random() * 100)}, 0, 0.8)`;
         }
-        update() {
-            this.y -= this.speedY;
-            if (this.y < 0) this.y = canvas.height + 10;
-        }
-        draw() {
-            ctx.fillStyle = this.color;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
+        update() { this.y -= this.speedY; if (this.y < 0) this.y = canvas.height + 10; }
+        draw() { ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
     }
-
-    function init() {
-        for (let i = 0; i < 100; i++) particles.push(new Particle());
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => { p.update(); p.draw(); });
-        requestAnimationFrame(animate);
-    }
+    function init() { for (let i = 0; i < 80; i++) particles.push(new Particle()); }
+    function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
     init(); animate();
 
     function triggerSync() {
-        alert("DRAGON CORE: Configuration Uploaded to Cloud Server! 🔥");
+        alert("𝐀𝐊𝐈𝐘𝐀 龍 ⚙️ - 𝙼𝙳 ◈|⚜️🏷️: AI Auto-Reply Data Synced Successfully! 🔥");
     }
 </script>
 
