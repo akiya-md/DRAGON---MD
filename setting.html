@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝐀𝐊𝐈𝐘𝐀 龍 𝐌𝐃 - User Settings</title>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 15px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #111;
+            border-radius: 20px;
+            border: 1px solid #ff0000;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
+        }
+        .banner-area {
+            width: 100%;
+            height: 150px;
+            background: url('logo2.jpg') center/cover;
+            border-bottom: 3px solid #ff0000;
+        }
+        .profile-section {
+            padding: 20px;
+            text-align: center;
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #ff0000;
+            margin-top: -60px;
+            background: #222;
+        }
+        .section-title {
+            color: #ff0000;
+            border-bottom: 1px solid #333;
+            padding: 10px;
+            margin-top: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .input-group {
+            padding: 15px;
+        }
+        label { display: block; margin-bottom: 5px; font-size: 14px; color: #bbb; }
+        input, select {
+            width: 95%;
+            padding: 10px;
+            background: #1a1a1a;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        input:focus { border-color: #ff0000; outline: none; }
+        
+        /* Auto Reply List Style */
+        .auto-reply-list {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        .reply-card {
+            background: #1a1a1a;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid #ff0000;
+        }
+        .btn-save {
+            width: 100%;
+            padding: 15px;
+            background: #ff0000;
+            color: #fff;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn-save:hover { background: #cc0000; }
+        
+        .toggle-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #1a1a1a;
+            margin-bottom: 5px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="banner-area"></div>
+    <div class="profile-section">
+        <img src="https://via.placeholder.com/100" alt="User" class="profile-img">
+        <h2>𝐁𝐎𝐓 𝐒𝐄𝐓𝐓𝐈𝐍𝐆𝐒</h2>
+    </div>
+
+    <div class="input-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="Enter Name">
+        
+        <label>Your Age</label>
+        <input type="number" placeholder="Enter Age">
+
+        <label>Work Mode</label>
+        <select>
+            <option>Only Me (Private)</option>
+            <option>Admin Only</option>
+            <option>Everyone (Public)</option>
+        </select>
+    </div>
+
+    <div class="section-title">🛡️ Security & Groups</div>
+    <div class="input-group">
+        <div class="toggle-box">
+            <span>Call Block System</span>
+            <input type="checkbox" style="width: auto;">
+        </div>
+        <div class="toggle-box">
+            <span>Anti-Link System</span>
+            <input type="checkbox" style="width: auto;" checked>
+        </div>
+        <div class="toggle-box">
+            <span>Auto Status View</span>
+            <input type="checkbox" style="width: auto;">
+        </div>
+    </div>
+
+    <div class="section-title">💬 Auto-Reply Manager (Max 20)</div>
+    <div class="auto-reply-list" id="replyList">
+        <div class="reply-card">
+            <input type="text" placeholder="Trigger (e.g. Hi)" style="margin-bottom: 5px;">
+            <input type="text" placeholder="Response Message">
+        </div>
+    </div>
+    <button style="background: #333; color: #fff; width: 100%; border: none; padding: 10px; cursor: pointer;">+ Add New Reply</button>
+
+    <br><br>
+    <button class="btn-save">💾 SAVE ALL SETTINGS</button>
+    <div style="text-align: center; padding: 10px; font-size: 12px; color: #666;">
+        𝖯𝗈𝗐𝖾𝗋𝖽 𝖡𝗒 𝐀𝐊𝐈𝐘𝐀 龍 ⚙️ - 𝙼𝙳
+    </div>
+</div>
+
+<script>
+    // මෙතනට පස්සේ Database එකට Data යවන Script එක ඇඩ් කරනවා
+</script>
+
+</body>
+</html>
