@@ -1,87 +1,87 @@
 <!DOCTYPE html>
-<html lang="si">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>𝐀𝐊𝐈𝐘𝐀 龍 𝐌𝐃 - Official</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>AKIYA 龍 MD | SECURE LOGIN</title>
     <style>
-        :root { --primary: #ff0000; --bg: #050505; --card-bg: #111111; }
-        body { background-color: var(--bg); color: white; font-family: 'Poppins', sans-serif; margin: 0; padding: 0; }
-        
-        /* Main Banner Section */
-        .hero { text-align: center; padding: 60px 20px; background: linear-gradient(to bottom, rgba(255,0,0,0.1), var(--bg)); }
-        .banner-img { width: 100%; max-width: 800px; border-radius: 20px; box-shadow: 0 0 30px rgba(255, 0, 0, 0.4); border: 1px solid #333; margin-bottom: 20px; }
-        h1 { font-size: 3rem; margin: 10px 0; letter-spacing: 2px; }
-        .tagline { font-size: 1.2rem; color: #888; margin-bottom: 40px; }
-
-        /* Feature Cards */
-        .features { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 20px; }
-        .f-card { background: var(--card-bg); padding: 20px; border-radius: 15px; width: 220px; border-top: 3px solid var(--primary); text-align: center; transition: 0.3s; }
-        .f-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(255,0,0,0.2); }
-        .f-card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 15px; }
-        .f-card h3 { margin: 10px 0; font-size: 1.1rem; }
-
-        /* Action Cards (Main Menu) */
-        .menu-section { display: flex; justify-content: center; gap: 30px; padding: 50px 20px; flex-wrap: wrap; }
-        .menu-card { background: linear-gradient(145deg, #151515, #0a0a0a); border: 1px solid #333; padding: 40px; border-radius: 25px; width: 300px; text-align: center; transition: 0.4s; cursor: pointer; }
-        .menu-card:hover { border-color: var(--primary); box-shadow: 0 0 40px rgba(255, 0, 0, 0.3); }
-        .menu-card i { font-size: 4rem; color: var(--primary); margin-bottom: 20px; }
-        .menu-card h2 { margin-bottom: 15px; }
-        .btn-link { text-decoration: none; color: white; display: block; }
-
-        footer { text-align: center; padding: 40px; border-top: 1px solid #222; font-size: 14px; color: #555; }
-        .red { color: var(--primary); }
+        body {
+            background-color: #000;
+            color: #ff0000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .login-box {
+            background: rgba(15, 15, 15, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px solid #ff0000;
+            box-shadow: 0 0 20px #ff0000;
+            text-align: center;
+            width: 350px;
+        }
+        .logo {
+            width: 150px;
+            border-radius: 50%;
+            border: 3px solid #ff0000;
+            box-shadow: 0 0 15px #ff0000;
+            margin-bottom: 20px;
+        }
+        h2 { margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #111;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 5px;
+            outline: none;
+        }
+        input:focus { border-color: #ff0000; box-shadow: 0 0 10px #ff0000; }
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #ff0000;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        button:hover { background: #b30000; box-shadow: 0 0 20px #ff0000; }
+        .footer-text { font-size: 12px; margin-top: 20px; color: #888; }
     </style>
 </head>
 <body>
 
-    <section class="hero">
-        <img src="logo2.png" alt="AKIYA Logo" class="banner-img">
-        <h1>𝐀𝐊𝐈𝐘𝐀 <span class="red">龍</span> 𝐌𝐃</h1>
-        <p class="tagline">The Best & Most Powerful WhatsApp Bot in Sri Lanka</p>
-        
-        <div class="features">
-            <div class="f-card">
-                <i class="fas fa-bolt"></i>
-                <h3>ULTRA FAST</h3>
-                <p style="font-size: 12px; color: #666;">High speed response time</p>
-            </div>
-            <div class="f-card">
-                <i class="fas fa-shield-alt"></i>
-                <h3>100% SECURE</h3>
-                <p style="font-size: 12px; color: #666;">Privacy is our priority</p>
-            </div>
-            <div class="f-card">
-                <i class="fas fa-headset"></i>
-                <h3>24/7 SUPPORT</h3>
-                <p style="font-size: 12px; color: #666;">Always online for help</p>
-            </div>
-        </div>
-    </section>
+<div class="login-box">
+    <img src="https://i.ibb.co/68vD66F/logo.jpg" alt="Logo" class="logo">
+    <h2>Access Portal</h2>
+    <input type="text" placeholder="WhatsApp Number (07XXXXXXXX)">
+    <input type="password" placeholder="Secret Password">
+    <button onclick="login()">ENTER THE REALM</button>
+    <div class="footer-text">OWNER: AKIYA 龍 | SYSTEM SECURE</div>
+</div>
 
-    <div class="menu-section">
-        <a href="getcode.html" class="btn-link">
-            <div class="menu-card">
-                <i class="fas fa-qrcode"></i>
-                <h2>GET CODE</h2>
-                <p>Connect your WhatsApp with 𝐀𝐊𝐈𝐘𝐀 龍 𝐌𝐃</p>
-            </div>
-        </a>
-
-        <a href="settings.html" class="btn-link">
-            <div class="menu-card">
-                <i class="fas fa-user-cog"></i>
-                <h2>SETTINGS</h2>
-                <p>Manage Auto-replies & Bot Profile</p>
-            </div>
-        </a>
-    </div>
-
-    <footer>
-        <p>𝖯𝗈𝗐𝖾𝗋𝖽 𝖡𝗒 <span class="red">𝐀𝐊𝐈𝐘𝐀 龍</span> ⚙️ - 𝙼𝙳</p>
-        <p style="font-size: 10px;">© 2026 Akiya-MD Master Project. All Rights Reserved.</p>
-    </footer>
+<script>
+    function login() {
+        alert("Connecting to Dragon Server... Please wait.");
+        // මෙතනට තමයි අපේ Backend API එක ලින්ක් කරන්නේ
+    }
+    // Anti-Inspect Code
+    document.onkeydown = function(e) {
+        if(event.keyCode == 123) { return false; }
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
+    };
+</script>
 
 </body>
 </html>
