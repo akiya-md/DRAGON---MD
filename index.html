@@ -65,21 +65,32 @@
 <div class="login-box">
     <img src="logo.png" alt="AKIYA 龍 MD" class="logo">
     <h2>Access Portal</h2>
-    <input type="text" placeholder="WhatsApp Number (07XXXXXXXX)">
-    <input type="password" placeholder="Secret Password">
+    <input type="text" id="waNumber" placeholder="WhatsApp Number (07XXXXXXXX)">
+    <input type="password" id="waPass" placeholder="Secret Password">
     <button onclick="login()">ENTER THE REALM</button>
     <div class="footer-text">OWNER: AKIYA 龍 | SYSTEM SECURE</div>
 </div>
 
 <script>
     function login() {
-        alert("Connecting to Dragon Server... Please wait.");
-        // මෙතනට තමයි අපේ Backend API එක ලින්ක් කරන්නේ
+        const number = document.getElementById('waNumber').value;
+        const password = document.getElementById('waPass').value;
+
+        // මෙතන තමයි සිකියුරිටි චෙක් එක වෙන්නේ
+        // මම දැනට පාස්වර්ඩ් එක AKIYA@2026 කියලා දැම්මා
+        if (number.length >= 10 && password === "AKIYA@2026") {
+            alert("Access Granted! Connecting to Dragon Server...");
+            window.location.href = 'settings.html'; 
+        } else {
+            alert("Access Denied! Check your Number and Password.");
+        }
     }
-    // Anti-Inspect Code
+
+    // Anti-Inspect Code (කෝඩ් එක කොපි කරන එක නවත්තන්න)
     document.onkeydown = function(e) {
         if(event.keyCode == 123) { return false; }
         if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
+        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
     };
 </script>
 
