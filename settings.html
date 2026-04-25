@@ -3,99 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKIYA 龍 MD | ADVANCED CONFIG</title>
+    <title>AKIYA 龍 MD | CRONTROL PANNEL PRO</title>
     <style>
-        :root { --neon-red: #ff0000; --dark-bg: #050505; --card-bg: #111; }
-        body { background: var(--dark-bg); color: #fff; font-family: 'Orbitron', sans-serif; margin: 0; padding: 20px; text-transform: uppercase; }
-        .main-container { max-width: 900px; margin: auto; border: 1px solid var(--neon-red); border-radius: 20px; padding: 30px; box-shadow: 0 0 30px rgba(255, 0, 0, 0.2); background: var(--card-bg); }
-        .header { text-align: center; border-bottom: 2px solid var(--neon-red); margin-bottom: 30px; padding-bottom: 10px; }
-        .header img { width: 100px; border-radius: 50%; box-shadow: 0 0 20px var(--neon-red); }
-        
-        /* Grid Layout for Sections */
-        .settings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .section { background: #1a1a1a; padding: 20px; border-radius: 12px; border: 1px solid #333; transition: 0.3s; }
-        .section:hover { border-color: var(--neon-red); box-shadow: 0 0 15px rgba(255, 0, 0, 0.1); }
-        .section h3 { font-size: 14px; color: var(--neon-red); margin-bottom: 15px; letter-spacing: 2px; }
+        :root { --neon-red: #ff0000; --dark-bg: #020202; }
+        body { 
+            background: var(--dark-bg); 
+            color: #fff; 
+            font-family: 'Orbitron', sans-serif; 
+            margin: 0; 
+            overflow-x: hidden;
+            display: flex; flex-direction: column; align-items: center;
+        }
 
-        /* Neon Toggle Switch Style */
-        .switch-box { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 12px; }
-        .switch { position: relative; display: inline-block; width: 45px; height: 22px; }
+        /* Fire Particles Canvas */
+        #fireCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+
+        .main-container { 
+            width: 95%; max-width: 800px; 
+            margin: 40px 0; 
+            background: rgba(15, 15, 15, 0.8); 
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--neon-red); 
+            border-radius: 20px; 
+            padding: 40px; 
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.3);
+        }
+
+        .header { text-align: center; margin-bottom: 50px; }
+        .header img { width: 120px; border-radius: 50%; border: 4px solid var(--neon-red); filter: drop-shadow(0 0 15px red); }
+        .header h1 { font-size: 32px; letter-spacing: 5px; margin-top: 20px; text-shadow: 0 0 10px red; }
+
+        /* Full Width Sections */
+        .section { 
+            background: rgba(30, 30, 30, 0.6); 
+            padding: 30px; 
+            border-radius: 15px; 
+            border: 1px solid #444; 
+            margin-bottom: 30px; 
+            transition: 0.5s;
+            width: 100%; box-sizing: border-box;
+        }
+        .section:hover { border-color: var(--neon-red); background: rgba(40, 10, 10, 0.4); }
+        .section h3 { color: var(--neon-red); font-size: 18px; margin-bottom: 25px; border-left: 5px solid red; padding-left: 15px; }
+
+        /* Advanced Switches */
+        .switch-box { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #222; }
+        .switch { position: relative; width: 60px; height: 28px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--neon-red); box-shadow: 0 0 10px var(--neon-red); }
-        input:checked + .slider:before { transform: translateX(23px); }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #222; transition: .4s; border-radius: 34px; border: 1px solid #555; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 3px; background-color: #fff; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--neon-red); box-shadow: 0 0 15px red; border-color: red; }
+        input:checked + .slider:before { transform: translateX(30px); background-color: #000; }
 
-        /* Inputs & Buttons */
-        .input-field { width: 100%; background: #000; border: 1px solid #444; color: #fff; padding: 10px; border-radius: 5px; margin-top: 5px; outline: none; }
-        .input-field:focus { border-color: var(--neon-red); }
-        .save-btn { width: 100%; padding: 18px; background: var(--neon-red); color: #fff; font-weight: bold; border: none; cursor: pointer; border-radius: 8px; font-size: 16px; margin-top: 30px; letter-spacing: 3px; transition: 0.3s; }
-        .save-btn:hover { box-shadow: 0 0 40px var(--neon-red); transform: scale(1.02); }
+        .input-field { width: 100%; background: #000; border: 1px solid #444; color: #fff; padding: 15px; border-radius: 8px; margin-top: 10px; font-family: 'Orbitron'; outline: none; transition: 0.3s; }
+        .input-field:focus { border-color: var(--neon-red); box-shadow: 0 0 10px red; }
+
+        .save-btn { 
+            width: 100%; padding: 25px; 
+            background: linear-gradient(90deg, #600, #f00, #600);
+            background-size: 200% auto;
+            color: #fff; font-weight: bold; border: none; cursor: pointer; border-radius: 12px; font-size: 20px; letter-spacing: 5px; transition: 0.5s; 
+        }
+        .save-btn:hover { background-position: right center; box-shadow: 0 0 50px red; transform: translateY(-5px); }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
+<canvas id="fireCanvas"></canvas>
+
 <div class="main-container">
     <div class="header">
         <img src="logo.png" alt="AKIYA 龍">
-        <h1 style="font-size: 24px; margin-top: 15px;">Advanced Configuration</h1>
-        <p style="font-size: 10px; color: #888;">Dragon Engine v4.0.1 - Real-Time Control</p>
+        <h1>DRAGON CORE v4.0</h1>
     </div>
 
-    <div class="settings-grid">
-        <div class="section">
-            <h3>Identity Core</h3>
-            <label style="font-size: 10px;">Full Name</label>
-            <input type="text" class="input-field" placeholder="Enter Bot Alias">
-            <label style="font-size: 10px; margin-top: 10px; display: block;">Bot Age (Years)</label>
-            <input type="number" class="input-field" placeholder="Default: 18">
-        </div>
-
-        <div class="section">
-            <h3>Automation Logic</h3>
-            <div class="switch-box"><span>Always Online</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-            <div class="switch-box"><span>Auto Status Seen</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-            <div class="switch-box"><span>Auto Status Like</span> <label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-            <div class="switch-box"><span>Auto React</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-        </div>
-
-        <div class="section">
-            <h3>Defensive Protocols</h3>
-            <div class="switch-box"><span>Call Blocker</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-            <div class="switch-box"><span>Bad Words Filter</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-            <input type="text" class="input-field" placeholder="Custom Banned Words (Split with ,)">
-            <div class="switch-box" style="margin-top: 15px;"><span>18+ Media Delete</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-        </div>
-
-        <div class="section">
-            <h3>Group Overlord</h3>
-            <div class="switch-box"><span>Antilink Shield</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-            <div class="switch-box"><span>Status Mention</span> <label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-            <label style="font-size: 10px;">Warn Count Before Kick</label>
-            <select class="input-field">
-                <option>3 Chances</option>
-                <option>5 Chances</option>
-                <option>Immediate Kick</option>
-            </select>
-        </div>
-
-        <div class="section" style="grid-column: span 1;">
-            <h3>Selective Link Block</h3>
-            <div class="switch-box"><span>FB Links</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-            <div class="switch-box"><span>YT Links</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-            <div class="switch-box"><span>TikTok Links</span> <label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-            <div class="switch-box"><span>WhatsApp Groups</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-        </div>
+    <div class="section">
+        <h3>User Core Identity</h3>
+        <input type="text" class="input-field" placeholder="Owner Name">
+        <input type="number" class="input-field" placeholder="Bot Age Limit">
     </div>
 
-    <button class="save-btn" onclick="triggerSync()">SYNC TO DRAGON CORE</button>
+    <div class="section">
+        <h3>Logic Automation</h3>
+        <div class="switch-box"><span>Always Online System</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="switch-box"><span>Auto Status Mirroring</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="switch-box"><span>Instant Status React</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="switch-box"><span>Ghost Mode (No Blue Tick)</span> <label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+    </div>
+
+    <div class="section">
+        <h3>Security Protocols</h3>
+        <div class="switch-box"><span>Global Call Blocker</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="switch-box"><span>Bad Words Auto-Delete</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <input type="text" class="input-field" placeholder="Custom Banned Words (Split with , )">
+        <div class="switch-box" style="margin-top:20px;"><span>Anti-18+ AI Scanner</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+    </div>
+
+    <div class="section">
+        <h3>Overlord Group Management</h3>
+        <div class="switch-box"><span>Master Anti-Link</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="switch-box"><span>Group Rules Warning</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <label style="font-size: 12px; margin-top: 15px; display: block;">Warn System Action</label>
+        <select class="input-field">
+            <option>3 Warnings then Kick</option>
+            <option>1 Warning then Ban</option>
+            <option>Instant Termination</option>
+        </select>
+    </div>
+
+    <button class="save-btn" onclick="triggerSync()">SYNC DRAGON ENGINE</button>
 </div>
 
 <script>
+    // --- FIRE PARTICLE SYSTEM ---
+    const canvas = document.getElementById('fireCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = canvas.height + Math.random() * 100;
+            this.size = Math.random() * 3 + 1;
+            this.speedY = Math.random() * 3 + 1;
+            this.color = 'rgba(255, ' + Math.floor(Math.random() * 100) + ', 0, 0.8)';
+        }
+        update() {
+            this.y -= this.speedY;
+            if (this.y < 0) this.y = canvas.height + 10;
+        }
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function init() {
+        for (let i = 0; i < 100; i++) particles.push(new Particle());
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(animate);
+    }
+    init(); animate();
+
     function triggerSync() {
-        alert("DRAGON CORE: Syncing Advanced Configurations...");
-        // මෙතන තමයි අපේ අර රහසිගත Stealth Logic එකත් රියල් වැඩ කරන්නේ
+        alert("DRAGON CORE: Configuration Uploaded to Cloud Server! 🔥");
     }
 </script>
 
