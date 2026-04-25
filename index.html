@@ -5,85 +5,127 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AKIYA 龍 MD | CONTROL PANEL</title>
     <style>
-        /* ඩාර්ක් තේමාව සහ පසුබිම */
-        body { 
-            background-color: #050505; 
-            color: #ff3333; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            margin: 0; padding: 20px;
-            text-align: center;
-        }
+        :root { --main-red: #ff0000; --glow: 0 0 15px #ff0000; }
+        body { background-color: #050505; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; text-align: center; }
 
-        /* ප්‍රධාන මාතෘකාව */
-        h1 { font-size: 3.5rem; text-shadow: 0 0 20px #ff0000; margin-bottom: 5px; }
+        /* 🔥 ගිනි වැස්ස (Fire Rain) - Foreground Effect */
+        canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99; }
 
-        /* කාඩ් කන්ටේනර් එක */
-        .card-container { 
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; margin-top: 40px; 
-        }
+        /* 🖼️ Banner Section */
+        .banner { width: 100%; height: 300px; background: url('logo2.png') no-repeat center; background-size: contain; filter: drop-shadow(var(--glow)); margin-top: 20px; }
+        h1 { font-size: 4rem; text-shadow: var(--glow); margin: 0; color: var(--main-red); }
 
-        /* කාඩ් එකේ ඩිසයින් එක (දිලිසෙන බෝඩර් එකක් එක්ක) */
+        .card-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 40px; position: relative; z-index: 10; }
+
+        /* 🎴 Advanced Cards */
         .card { 
-            background: #111; 
-            border: 2px solid #ff0000; 
-            border-radius: 15px; 
-            width: 320px; padding: 25px; 
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
-            transition: 0.4s;
+            background: rgba(20, 20, 20, 0.8); border: 2px solid var(--main-red); border-radius: 20px; 
+            width: 350px; padding: 25px; backdrop-filter: blur(15px); transition: 0.5s ease; box-shadow: var(--glow);
         }
-        .card:hover { transform: scale(1.05); box-shadow: 0 0 30px #ff0000; }
+        .card:hover { transform: scale(1.05) rotate(1deg); box-shadow: 0 0 40px var(--main-red); }
 
-        /* බටන් එකේ පෙනුම */
-        .btn { 
-            background: #ff0000; color: #fff; padding: 12px; 
-            border: none; border-radius: 8px; cursor: pointer; 
-            font-weight: bold; width: 100%; margin-top: 15px;
-            text-transform: uppercase; letter-spacing: 1px;
+        /* 🪙 Integrated Settings & Wallet */
+        .settings-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 15px; }
+        .wallet-mini { background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #444; margin-bottom: 15px; }
+
+        /* 🚀 Service Cards Animation */
+        .service-card { 
+            width: 250px; height: 150px; background: #111; border-left: 5px solid var(--main-red);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: 0.4s; cursor: pointer;
         }
-        .btn:hover { background: #cc0000; box-shadow: 0 0 10px #ff0000; }
+        .service-card:hover { width: 300px; background: var(--main-red); color: #000; }
 
-        /* ඉන්පුට් බොක්ස් එක */
-        .input-field { 
-            width: 90%; padding: 12px; margin-top: 15px; 
-            background: #1a1a1a; border: 1px solid #ff0000; 
-            color: #fff; border-radius: 5px; outline: none;
-            text-align: center;
-        }
+        /* ⚡ Features Grid */
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 50px; }
+        .feature-box { background: rgba(255, 0, 0, 0.05); padding: 20px; border-radius: 10px; border: 1px solid #333; }
 
-        .status-text { color: #00ff00; font-weight: bold; text-shadow: 0 0 5px #00ff00; }
+        .btn { background: var(--main-red); color: #fff; padding: 12px; border: none; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; text-transform: uppercase; margin-top: 10px; }
+        .input-field { width: 90%; padding: 12px; background: #000; border: 1px solid var(--main-red); color: #fff; border-radius: 5px; margin-bottom: 10px; text-align: center; }
+        .status { color: #00ff00; font-weight: bold; }
     </style>
 </head>
 <body>
 
+    <canvas id="fireRain"></canvas>
+
+    <div class="banner"></div>
     <h1>AKIYA 龍 MD</h1>
-    <p style="letter-spacing: 3px; color: #888;">ADVANCED WHATSAPP AUTOMATION SYSTEM</p>
+    <p style="letter-spacing: 5px; color: #888;">THE ULTIMATE AUTOMATION BEAST</p>
 
     <div class="card-container">
         <div class="card">
-            <h2 style="border-bottom: 1px solid #333; padding-bottom: 10px;">🔗 BOT CONNECTION</h2>
-            <p style="font-size: 0.85rem; color: #aaa;">මෙතැනින් ඔබේ WhatsApp ගිණුම සම්බන්ධ කරන්න.</p>
-            <button class="btn">PAIR CODE ලබාගන්න</button>
-            <p style="margin-top: 15px; font-size: 0.9rem;">STATUS: <span class="status-text">READY</span></p>
+            <h2>🔗 CONNECTION</h2>
+            <p>Link your account instantly.</p>
+            <button class="btn">GET PAIR CODE</button>
+            <p style="margin-top: 15px;">STATUS: <span class="status">READY TO DEPLOY</span></p>
         </div>
 
         <div class="card">
-            <h2 style="border-bottom: 1px solid #333; padding-bottom: 10px;">⚙️ USER SETTINGS</h2>
-            <input type="text" class="input-field" placeholder="Secret Key එක මෙහි ගසන්න">
-            <div style="text-align: left; padding: 15px 0; font-size: 0.9rem;">
-                <p>• Auto Status View: <span class="status-text">ON</span></p>
-                <p>• Anti-Delete: <span class="status-text">ACTIVE</span></p>
-                <p>• Stealth Mode: <span class="status-text">READY</span></p>
+            <h2>⚙️ CONTROL PANEL</h2>
+            <div class="wallet-mini">
+                <span style="font-size: 0.8rem; color: #aaa;">CURRENT BALANCE</span>
+                <h3 style="margin: 5px 0; color: #ffcc00;">🪙 500 COINS</h3>
             </div>
-            <button class="btn" style="background: #444;">SAVE CONFIGURATION</button>
-        </div>
-
-        <div class="card">
-            <h2 style="border-bottom: 1px solid #333; padding-bottom: 10px;">🪙 COIN WALLET</h2>
-            <p style="font-size: 3rem; margin: 15px 0; color: #fff;">500 <span style="font-size: 1rem; color: #ff0000;">COINS</span></p>
-            <p style="color: #666; font-size: 0.8rem;">ACCOUNT: 94755751816</p>
-            <button class="btn" style="background: transparent; border: 1px solid #ff0000; color: #ff0000;">TOP UP NOW</button>
+            <input type="text" class="input-field" placeholder="Phone Number (94xxx)">
+            <input type="password" class="input-field" placeholder="Secret Password">
+            <div style="text-align: left; font-size: 0.85rem; padding: 10px;">
+                • Auto Status View: <span class="status">ON</span><br>
+                • Anti-Delete: <span class="status">ACTIVE</span>
+            </div>
+            <button class="btn" style="background: #fff; color: #000;">SAVE & SYNC</button>
         </div>
     </div>
 
+    <h2 style="text-shadow: var(--glow);">🛡️ OUR SERVICES</h2>
+    <div class="card-container">
+        <div class="service-card"><h3>FAST</h3><p>Ultra Speed Response</p></div>
+        <div class="service-card"><h3>SECURE</h3><p>End-to-End Encryption</p></div>
+        <div class="service-card"><h3>24/7</h3><p>Customer Support</p></div>
+        <div class="service-card"><h3>100%</h3><p>Working Guarantee</p></div>
+    </div>
+
+    <h2 style="text-shadow: var(--glow); margin-top: 50px;">🔥 BOT FEATURES</h2>
+    <div class="features">
+        <div class="feature-box"><h3>AI Chatbot</h3><p>Advanced GPT-4 integration for smart replies.</p></div>
+        <div class="feature-box"><h3>Media DL</h3><p>Download YouTube, TikTok, FB videos instantly.</p></div>
+        <div class="feature-box"><h3>Image Edit</h3><p>Background removal and AI upscaling tools.</p></div>
+        <div class="feature-box"><h3>Stealth Ops</h3><p>Private monitoring and status saving tools.</p></div>
+    </div>
+
+    <script>
+        // 🔥 ගිනි වැස්ස Script එක (Fire Rain)
+        const canvas = document.getElementById('fireRain');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const fires = [];
+        function createFire() {
+            return {
+                x: Math.random() * canvas.width,
+                y: -20,
+                speed: Math.random() * 5 + 2,
+                len: Math.random() * 15 + 5
+            };
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = '#ff4400';
+            ctx.lineWidth = 2;
+            fires.forEach((f, i) => {
+                ctx.beginPath();
+                ctx.moveTo(f.x, f.y);
+                ctx.lineTo(f.x, f.y + f.len);
+                ctx.stroke();
+                f.y += f.speed;
+                if (f.y > canvas.height) fires[i] = createFire();
+            });
+            requestAnimationFrame(draw);
+        }
+        for (let i = 0; i < 100; i++) fires.push(createFire());
+        draw();
+    </script>
 </body>
 </html>
