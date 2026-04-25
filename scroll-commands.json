@@ -1,0 +1,36 @@
+{
+  "botName": "AKIYA 龍 MD",
+  "version": "5.0.1",
+  "ownerNumber": "94755751816",
+  "prefix": ".",
+  "menuLayout": {
+    "header": "𝐀𝐊𝐈𝐘𝐀 龍 ⚙️ - 𝙼𝙳 𝙼𝙴𝙽𝚄 𝙻𝙸𝚂𝚃",
+    "categories": [
+      {
+        "name": "📥 DOWNLOAD COMMANDS",
+        "cmds": [".movie", ".song", ".video", ".dl", ".game", ".xxx"]
+      },
+      {
+        "name": "🎨 AI & EDITING TOOLS",
+        "cmds": [".rembg", ".upscale", ".logo", ".togif"]
+      },
+      {
+        "name": "🪙 COIN & SERVICES",
+        "cmds": [".balance", ".buycoin", ".boost"]
+      },
+      {
+        "name": "🧠 SMART AI & SEARCH",
+        "cmds": [".ai", ".search", ".shop", ".img"]
+      },
+      {
+        "name": "⚙️ SYSTEM SETTINGS",
+        "cmds": [".alive", ".blocker", ".set"]
+      }
+    ]
+  },
+  "responses": {
+    "aliveMsg": "AKIYA 龍 MD Is Online 🟢\nStatus: Ultra Stable\nSpeed: Fast",
+    "buyCoinInfo": "Contact Master AKIYA: 0755751816\n1000 Coins = Rs. 500",
+    "errorMsg": "❌ Invalid Command! Please use .MENU"
+  }
+}
