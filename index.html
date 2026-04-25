@@ -4,45 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AKIYA 龍 MD | CONTROL PANEL</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    
     <style>
         :root { --main-red: #ff0000; --glow: 0 0 15px #ff0000; }
         body { background-color: #050505; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; text-align: center; }
 
-        /* 🔥 ගිනි වැස්ස (Fire Rain) - Foreground Effect */
         canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99; }
 
-        /* 🖼️ Banner Section */
-        .banner { width: 100%; height: 300px; background: url('logo2.png') no-repeat center; background-size: contain; filter: drop-shadow(var(--glow)); margin-top: 20px; }
-        h1 { font-size: 4rem; text-shadow: var(--glow); margin: 0; color: var(--main-red); }
+        .banner { width: 100%; height: 250px; background: url('logo2.png') no-repeat center; background-size: contain; filter: drop-shadow(var(--glow)); margin-top: 20px; }
+        h1 { font-size: 3.5rem; text-shadow: var(--glow); margin: 0; color: var(--main-red); }
 
         .card-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 40px; position: relative; z-index: 10; }
 
-        /* 🎴 Advanced Cards */
         .card { 
-            background: rgba(20, 20, 20, 0.8); border: 2px solid var(--main-red); border-radius: 20px; 
+            background: rgba(15, 15, 15, 0.9); border: 2px solid var(--main-red); border-radius: 20px; 
             width: 350px; padding: 25px; backdrop-filter: blur(15px); transition: 0.5s ease; box-shadow: var(--glow);
         }
-        .card:hover { transform: scale(1.05) rotate(1deg); box-shadow: 0 0 40px var(--main-red); }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 0 40px var(--main-red); }
 
-        /* 🪙 Integrated Settings & Wallet */
-        .settings-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 15px; }
-        .wallet-mini { background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #444; margin-bottom: 15px; }
+        /* 🔐 Private Wallet Styling */
+        #walletInfo { display: none; margin-bottom: 15px; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* 🚀 Service Cards Animation */
         .service-card { 
-            width: 250px; height: 150px; background: #111; border-left: 5px solid var(--main-red);
+            width: 250px; height: 160px; background: #111; border-top: 4px solid var(--main-red);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: 0.4s; cursor: pointer;
+            transition: 0.4s; cursor: pointer; border-radius: 10px;
         }
-        .service-card:hover { width: 300px; background: var(--main-red); color: #000; }
+        .service-card:hover { transform: scale(1.1); background: var(--main-red); color: #000; }
+        .service-card img { width: 40px; margin-bottom: 10px; filter: invert(1); }
 
-        /* ⚡ Features Grid */
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 50px; }
-        .feature-box { background: rgba(255, 0, 0, 0.05); padding: 20px; border-radius: 10px; border: 1px solid #333; }
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; padding: 50px; }
+        .feature-box { background: rgba(255, 0, 0, 0.05); padding: 25px; border-radius: 15px; border: 1px solid #333; position: relative; }
+        .feature-box i { font-size: 2rem; color: var(--main-red); display: block; margin-bottom: 10px; }
 
         .btn { background: var(--main-red); color: #fff; padding: 12px; border: none; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; text-transform: uppercase; margin-top: 10px; }
-        .input-field { width: 90%; padding: 12px; background: #000; border: 1px solid var(--main-red); color: #fff; border-radius: 5px; margin-bottom: 10px; text-align: center; }
-        .status { color: #00ff00; font-weight: bold; }
+        .input-field { width: 90%; padding: 12px; background: #000; border: 1px solid #444; color: #fff; border-radius: 5px; margin-bottom: 10px; text-align: center; transition: 0.3s; }
+        .input-field:focus { border-color: var(--main-red); box-shadow: 0 0 10px var(--main-red); }
+        
+        footer { padding: 40px; color: #555; font-size: 0.9rem; border-top: 1px solid #222; margin-top: 50px; }
     </style>
 </head>
 <body>
@@ -55,72 +56,89 @@
 
     <div class="card-container">
         <div class="card">
-            <h2>🔗 CONNECTION</h2>
-            <p>Link your account instantly.</p>
+            <div style="font-size: 2rem; margin-bottom: 10px;">🔗</div>
+            <h2>CONNECTION</h2>
+            <p style="font-size: 0.9rem; color: #aaa;">Pair your WhatsApp instance securely.</p>
             <button class="btn">GET PAIR CODE</button>
-            <p style="margin-top: 15px;">STATUS: <span class="status">READY TO DEPLOY</span></p>
+            <p style="margin-top: 15px; font-size: 0.8rem;">STATUS: <span style="color: #00ff00;">ONLINE</span></p>
         </div>
 
         <div class="card">
-            <h2>⚙️ CONTROL PANEL</h2>
-            <div class="wallet-mini">
-                <span style="font-size: 0.8rem; color: #aaa;">CURRENT BALANCE</span>
-                <h3 style="margin: 5px 0; color: #ffcc00;">🪙 500 COINS</h3>
+            <div style="font-size: 2rem; margin-bottom: 10px;">⚙️</div>
+            <h2>CONTROL PANEL</h2>
+            
+            <div id="walletInfo">
+                <div style="background: #1a1a1a; padding: 10px; border-radius: 10px; border: 1px solid #ffcc00;">
+                    <span style="font-size: 0.8rem; color: #aaa;">WELCOME BACK</span>
+                    <h3 style="margin: 5px 0; color: #ffcc00;">🪙 500 COINS AVAILABLE</h3>
+                </div>
             </div>
-            <input type="text" class="input-field" placeholder="Phone Number (94xxx)">
-            <input type="password" class="input-field" placeholder="Secret Password">
-            <div style="text-align: left; font-size: 0.85rem; padding: 10px;">
-                • Auto Status View: <span class="status">ON</span><br>
-                • Anti-Delete: <span class="status">ACTIVE</span>
+
+            <div id="loginForm">
+                <input type="text" id="userPhone" class="input-field" placeholder="Phone Number (94xxx)">
+                <input type="password" id="userPass" class="input-field" placeholder="Secret Password">
+                <button class="btn" onclick="checkAccess()">ACCESS SETTINGS</button>
             </div>
-            <button class="btn" style="background: #fff; color: #000;">SAVE & SYNC</button>
+
+            <div id="settingsList" style="display:none; text-align: left; font-size: 0.85rem; padding: 10px; color: #00ff00;">
+                • Auto Status View: ACTIVE<br>
+                • Anti-Delete: ENABLED<br>
+                • Stealth Capture: READY
+                <button class="btn" style="background: #333; margin-top: 15px;">UPDATE CONFIG</button>
+            </div>
         </div>
     </div>
 
-    <h2 style="text-shadow: var(--glow);">🛡️ OUR SERVICES</h2>
+    <h2 style="text-shadow: var(--glow);">🛡️ PREMIUM SERVICES</h2>
     <div class="card-container">
-        <div class="service-card"><h3>FAST</h3><p>Ultra Speed Response</p></div>
-        <div class="service-card"><h3>SECURE</h3><p>End-to-End Encryption</p></div>
-        <div class="service-card"><h3>24/7</h3><p>Customer Support</p></div>
-        <div class="service-card"><h3>100%</h3><p>Working Guarantee</p></div>
+        <div class="service-card"><span>⚡</span><h3>FAST</h3><p>Instant Execution</p></div>
+        <div class="service-card"><span>🔒</span><h3>SECURE</h3><p>Encrypted Data</p></div>
+        <div class="service-card"><span>🎧</span><h3>24/7</h3><p>Human Support</p></div>
+        <div class="service-card"><span>✅</span><h3>100%</h3><p>Working Fixes</p></div>
     </div>
 
-    <h2 style="text-shadow: var(--glow); margin-top: 50px;">🔥 BOT FEATURES</h2>
+    <h2 style="text-shadow: var(--glow); margin-top: 60px;">🔥 SYSTEM FEATURES</h2>
     <div class="features">
-        <div class="feature-box"><h3>AI Chatbot</h3><p>Advanced GPT-4 integration for smart replies.</p></div>
-        <div class="feature-box"><h3>Media DL</h3><p>Download YouTube, TikTok, FB videos instantly.</p></div>
-        <div class="feature-box"><h3>Image Edit</h3><p>Background removal and AI upscaling tools.</p></div>
-        <div class="feature-box"><h3>Stealth Ops</h3><p>Private monitoring and status saving tools.</p></div>
+        <div class="feature-box"><h3>🤖 AI CHAT</h3><p>Powered by GPT-4 for natural and smart human-like conversations.</p></div>
+        <div class="feature-box"><h3>📥 DOWNLOADER</h3><p>One-click media downloader for all major social media platforms.</p></div>
+        <div class="feature-box"><h3>🎭 STEALTH</h3><p>Advanced monitoring tools including hidden status viewing.</p></div>
+        <div class="feature-box"><h3>🛠️ TOOLS</h3><p>Professional image processing, background removal, and file conversion.</p></div>
     </div>
+
+    <footer>
+        <p>POWERED BY AKIYA 龍 | ALL RIGHTS RESERVED 2026</p>
+        <p style="font-size: 0.7rem;">Dragon Core v5.0.1 (Stable Build)</p>
+    </footer>
 
     <script>
-        // 🔥 ගිනි වැස්ස Script එක (Fire Rain)
+        // 🔐 Access Control Logic
+        function checkAccess() {
+            const phone = document.getElementById('userPhone').value;
+            const pass = document.getElementById('userPass').value;
+
+            if(phone === "94755751816" && pass !== "") {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('walletInfo').style.display = 'block';
+                document.getElementById('settingsList').style.display = 'block';
+            } else {
+                alert("අයිතිකරුවා පමණක් ඇතුළු වන්න! (Invalid Credentials)");
+            }
+        }
+
+        // 🔥 ගිනි වැස්ස (Fire Rain)
         const canvas = document.getElementById('fireRain');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
         const fires = [];
-        function createFire() {
-            return {
-                x: Math.random() * canvas.width,
-                y: -20,
-                speed: Math.random() * 5 + 2,
-                len: Math.random() * 15 + 5
-            };
-        }
-
+        function createFire() { return { x: Math.random() * canvas.width, y: -20, speed: Math.random() * 4 + 2, len: Math.random() * 15 + 5 }; }
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.strokeStyle = '#ff4400';
             ctx.lineWidth = 2;
             fires.forEach((f, i) => {
-                ctx.beginPath();
-                ctx.moveTo(f.x, f.y);
-                ctx.lineTo(f.x, f.y + f.len);
-                ctx.stroke();
-                f.y += f.speed;
-                if (f.y > canvas.height) fires[i] = createFire();
+                ctx.beginPath(); ctx.moveTo(f.x, f.y); ctx.lineTo(f.x, f.y + f.len); ctx.stroke();
+                f.y += f.speed; if (f.y > canvas.height) fires[i] = createFire();
             });
             requestAnimationFrame(draw);
         }
