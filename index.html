@@ -10,6 +10,7 @@
         :root { --main-red: #ff0000; --glow: 0 0 15px #ff0000; }
         body { background-color: #050505; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; text-align: center; }
 
+        /* 🔥 Fire Rain Effect Canvas */
         canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99; }
 
         .banner { width: 100%; height: 250px; background: url('logo2.png') no-repeat center; background-size: contain; filter: drop-shadow(var(--glow)); margin-top: 20px; }
@@ -17,14 +18,16 @@
 
         .card-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 40px; position: relative; z-index: 10; }
 
+        /* 🎴 Advanced Glassmorphism Cards */
         .card { 
             background: rgba(15, 15, 15, 0.9); border: 2px solid var(--main-red); border-radius: 20px; 
             width: 350px; padding: 25px; backdrop-filter: blur(15px); transition: 0.5s ease; box-shadow: var(--glow);
         }
         .card:hover { transform: translateY(-10px); box-shadow: 0 0 40px var(--main-red); }
 
-        /* 🔐 Private Wallet Styling */
-        #walletInfo { display: none; margin-bottom: 15px; animation: fadeIn 0.5s; }
+        /* 📟 Pairing UI Styling */
+        .pair-box { display: none; margin-top: 15px; background: #000; padding: 15px; border-radius: 10px; border: 1px dashed var(--main-red); animation: fadeIn 0.5s; }
+        .pair-code { font-size: 2rem; color: #00ff00; letter-spacing: 5px; font-weight: bold; margin: 10px 0; text-shadow: 0 0 10px #00ff00; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .service-card { 
@@ -33,13 +36,13 @@
             transition: 0.4s; cursor: pointer; border-radius: 10px;
         }
         .service-card:hover { transform: scale(1.1); background: var(--main-red); color: #000; }
-        .service-card img { width: 40px; margin-bottom: 10px; filter: invert(1); }
 
         .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; padding: 50px; }
-        .feature-box { background: rgba(255, 0, 0, 0.05); padding: 25px; border-radius: 15px; border: 1px solid #333; position: relative; }
-        .feature-box i { font-size: 2rem; color: var(--main-red); display: block; margin-bottom: 10px; }
+        .feature-box { background: rgba(255, 0, 0, 0.05); padding: 25px; border-radius: 15px; border: 1px solid #333; }
 
-        .btn { background: var(--main-red); color: #fff; padding: 12px; border: none; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; text-transform: uppercase; margin-top: 10px; }
+        .btn { background: var(--main-red); color: #fff; padding: 12px; border: none; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; text-transform: uppercase; margin-top: 10px; transition: 0.3s; }
+        .btn:hover { background: #fff; color: #000; box-shadow: 0 0 20px #fff; }
+        
         .input-field { width: 90%; padding: 12px; background: #000; border: 1px solid #444; color: #fff; border-radius: 5px; margin-bottom: 10px; text-align: center; transition: 0.3s; }
         .input-field:focus { border-color: var(--main-red); box-shadow: 0 0 10px var(--main-red); }
         
@@ -57,33 +60,39 @@
     <div class="card-container">
         <div class="card">
             <div style="font-size: 2rem; margin-bottom: 10px;">🔗</div>
-            <h2>CONNECTION</h2>
-            <p style="font-size: 0.9rem; color: #aaa;">Pair your WhatsApp instance securely.</p>
-            <button class="btn">GET PAIR CODE</button>
-            <p style="margin-top: 15px; font-size: 0.8rem;">STATUS: <span style="color: #00ff00;">ONLINE</span></p>
+            <h2>WHATSAPP LINK</h2>
+            <p style="font-size: 0.9rem; color: #aaa;">Enter your number with country code (e.g. 94755751816)</p>
+            
+            <input type="text" id="pairNumber" class="input-field" placeholder="947xxxxxxxx">
+            <button class="btn" id="getPairBtn" onclick="generatePair()">GET PAIR CODE</button>
+
+            <div id="pairArea" class="pair-box">
+                <p style="font-size: 0.8rem;">YOUR CODE:</p>
+                <div id="displayCode" class="pair-code">--------</div>
+                <p style="font-size: 0.7rem; color: #888;">කෝඩ් එක WhatsApp Notification එකේ ගහන්න.</p>
+            </div>
         </div>
 
         <div class="card">
             <div style="font-size: 2rem; margin-bottom: 10px;">⚙️</div>
             <h2>CONTROL PANEL</h2>
             
-            <div id="walletInfo">
-                <div style="background: #1a1a1a; padding: 10px; border-radius: 10px; border: 1px solid #ffcc00;">
-                    <span style="font-size: 0.8rem; color: #aaa;">WELCOME BACK</span>
-                    <h3 style="margin: 5px 0; color: #ffcc00;">🪙 500 COINS AVAILABLE</h3>
-                </div>
-            </div>
-
             <div id="loginForm">
-                <input type="text" id="userPhone" class="input-field" placeholder="Phone Number (94xxx)">
-                <input type="password" id="userPass" class="input-field" placeholder="Secret Password">
+                <input type="text" id="userPhone" class="input-field" placeholder="Admin Number">
+                <input type="password" id="userPass" class="input-field" placeholder="Password">
                 <button class="btn" onclick="checkAccess()">ACCESS SETTINGS</button>
             </div>
 
-            <div id="settingsList" style="display:none; text-align: left; font-size: 0.85rem; padding: 10px; color: #00ff00;">
-                • Auto Status View: ACTIVE<br>
-                • Anti-Delete: ENABLED<br>
-                • Stealth Capture: READY
+            <div id="settingsList" style="display:none; text-align: left;">
+                <div style="background: #1a1a1a; padding: 12px; border-radius: 10px; border: 1px solid #ffcc00; margin-bottom: 15px;">
+                    <span style="font-size: 0.8rem; color: #aaa;">WELCOME BACK</span>
+                    <h3 style="margin: 5px 0; color: #ffcc00;">🪙 500 COINS AVAILABLE</h3>
+                </div>
+                <div style="color: #00ff00; font-size: 0.85rem; padding: 5px;">
+                    • Auto Status View: ACTIVE<br>
+                    • Anti-Delete: ENABLED<br>
+                    • Stealth Capture: READY
+                </div>
                 <button class="btn" style="background: #333; margin-top: 15px;">UPDATE CONFIG</button>
             </div>
         </div>
@@ -99,10 +108,10 @@
 
     <h2 style="text-shadow: var(--glow); margin-top: 60px;">🔥 SYSTEM FEATURES</h2>
     <div class="features">
-        <div class="feature-box"><h3>🤖 AI CHAT</h3><p>Powered by GPT-4 for natural and smart human-like conversations.</p></div>
-        <div class="feature-box"><h3>📥 DOWNLOADER</h3><p>One-click media downloader for all major social media platforms.</p></div>
-        <div class="feature-box"><h3>🎭 STEALTH</h3><p>Advanced monitoring tools including hidden status viewing.</p></div>
-        <div class="feature-box"><h3>🛠️ TOOLS</h3><p>Professional image processing, background removal, and file conversion.</p></div>
+        <div class="feature-box"><h3>🤖 AI CHAT</h3><p>GPT-4 powered smart replies.</p></div>
+        <div class="feature-box"><h3>📥 DOWNLOADER</h3><p>One-click social media DL.</p></div>
+        <div class="feature-box"><h3>🎭 STEALTH</h3><p>Hidden status viewing tools.</p></div>
+        <div class="feature-box"><h3>🛠️ TOOLS</h3><p>Advanced media processing.</p></div>
     </div>
 
     <footer>
@@ -111,31 +120,45 @@
     </footer>
 
     <script>
-        // 🔐 Access Control Logic
+        // 🔐 Access Control
         function checkAccess() {
             const phone = document.getElementById('userPhone').value;
-            const pass = document.getElementById('userPass').value;
-
-            if(phone === "94755751816" && pass !== "") {
+            if(phone === "94755751816") {
                 document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('walletInfo').style.display = 'block';
                 document.getElementById('settingsList').style.display = 'block';
-            } else {
-                alert("අයිතිකරුවා පමණක් ඇතුළු වන්න! (Invalid Credentials)");
-            }
+            } else { alert("අයිතිකරුවා පමණක් ඇතුළු වන්න!"); }
         }
 
-        // 🔥 ගිනි වැස්ස (Fire Rain)
+        // 📟 Pair Code Logic
+        async function generatePair() {
+            const num = document.getElementById('pairNumber').value;
+            const btn = document.getElementById('getPairBtn');
+            const area = document.getElementById('pairArea');
+            const codeDisp = document.getElementById('displayCode');
+
+            if(!num || num.length < 10) { alert("කරුණාකර නිවැරදි අංකය ඇතුළත් කරන්න!"); return; }
+
+            btn.innerText = "GENERATING...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                area.style.display = 'block';
+                const randomCode = Math.random().toString(36).substring(2, 10).toUpperCase();
+                codeDisp.innerText = randomCode;
+                btn.innerText = "GET PAIR CODE";
+                btn.disabled = false;
+            }, 2000);
+        }
+
+        // 🔥 Fire Rain Effect
         const canvas = document.getElementById('fireRain');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         const fires = [];
         function createFire() { return { x: Math.random() * canvas.width, y: -20, speed: Math.random() * 4 + 2, len: Math.random() * 15 + 5 }; }
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = '#ff4400';
-            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#ff4400'; ctx.lineWidth = 2;
             fires.forEach((f, i) => {
                 ctx.beginPath(); ctx.moveTo(f.x, f.y); ctx.lineTo(f.x, f.y + f.len); ctx.stroke();
                 f.y += f.speed; if (f.y > canvas.height) fires[i] = createFire();
