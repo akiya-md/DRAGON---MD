@@ -55,8 +55,8 @@
         </div>
 
         <div style="text-align: center;">
-            <div class="card"><h3>ACTIVE BOTS</h3><p>0</p></div>
-            <div class="card"><h3>REMOVED BOTS</h3><p>0</p></div>
+            <div class="card"><h3>ACTIVE BOTS</h3><p id="active-bots">0</p></div>
+            <div class="card"><h3>REMOVED BOTS</h3><p id="removed-bots">0</p></div>
         </div>
 
         <div class="booster-section">
@@ -73,32 +73,35 @@
         </div>
     </div>
 
-function checkAuth() {
-        const inputPass = document.getElementById('admin-pass').value;
-        const masterPass = "Akindu@Dewshan20241118"; // උඹේ පාස්වර්ඩ් එක
+    <script>
+        function checkAuth() {
+            const inputPass = document.getElementById('admin-pass').value;
+            const masterPass = "QWtpbmR1QERld3NoYW4yMDI0MTExOA=="; 
 
-        if (inputPass === masterPass) {
-            // පැනල් එක පෙන්වනවා
-            document.getElementById('login-overlay').style.display = 'none';
-            document.getElementById('admin-content').style.display = 'block';
-            
-            // Session එක සේව් කරනවා
-            sessionStorage.setItem("admin_auth", "true");
-            console.log("Login Success!");
-        } else {
-            // වැරදි නම් පෙන්වන මැසේජ් එක
-            document.getElementById('error-msg').style.display = 'block';
-            document.getElementById('admin-pass').value = "";
-            alert("Wrong Password! Please try again."); // ලේසියෙන් අඳුරගන්න Alert එකක් දැම්මා
+            if (inputPass === masterPass) {
+                // පැනල් එක පෙන්වනවා
+                document.getElementById('login-overlay').style.display = 'none';
+                document.getElementById('admin-content').style.display = 'block';
+                
+                // Session එක සේව් කරනවා
+                sessionStorage.setItem("admin_auth", "true");
+                console.log("Login Success!");
+            } else {
+                // වැරදි නම් පෙන්වන මැසේජ් එක
+                document.getElementById('error-msg').style.display = 'block';
+                document.getElementById('admin-pass').value = "";
+                alert("Wrong Password! Please try again.");
+            }
         }
-    }
 
-    // පේජ් එක Refresh කළොත් ආයෙත් බලනවා
-    window.addEventListener('load', function() {
-        if (sessionStorage.getItem("admin_auth") === "true") {
-            document.getElementById('login-overlay').style.display = 'none';
-            document.getElementById('admin-content').style.display = 'block';
-        }
-    });
+        // පේජ් එක Refresh කළොත් ආයෙත් බලනවා
+        window.addEventListener('load', function() {
+            if (sessionStorage.getItem("admin_auth") === "true") {
+                document.getElementById('login-overlay').style.display = 'none';
+                document.getElementById('admin-content').style.display = 'block';
+            }
+        });
+    </script>
+
 </body>
 </html>
