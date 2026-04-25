@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝐀𝐊𝐈𝐘𝐀 龍 𝐌𝐃 - Admin Panel</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #ff0000;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .banner {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px #ff0000;
+        }
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: linear-gradient(145deg, #1a1a1a, #000000);
+            border: 1px solid #ff0000;
+            padding: 20px;
+            border-radius: 15px;
+            width: 200px;
+            text-align: center;
+            margin: 10px;
+        }
+        .card h3 { color: #ff0000; margin: 0; }
+        .card p { font-size: 24px; font-weight: bold; }
+        
+        .booster-section {
+            background: #111;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #ff0000;
+            margin-bottom: 30px;
+        }
+        input, button {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin: 5px;
+        }
+        input { width: 60%; background: #222; color: #fff; border: 1px solid #444; }
+        .btn-boost { background: #ff0000; color: white; cursor: pointer; font-weight: bold; }
+        .btn-control { background: #444; color: white; cursor: pointer; }
+        
+        canvas {
+            background: #111;
+            padding: 20px;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="logo2.jpg" alt="AKIYA Logo" class="banner">
+        <h1>𝐀𝐊𝐈𝐘𝐀 龍 𝐌𝐃 - 𝚂𝚄𝙿𝙴𝚁 𝙰𝙳𝙼𝙸𝙽 𝙿𝙰𝙽𝙴𝙻</h1>
+    </div>
+
+    <div class="stats-container">
+        <div class="card">
+            <h3>ACTIVE BOTS</h3>
+            <p id="active-count">0</p>
+        </div>
+        <div class="card">
+            <h3>REMOVED BOTS</h3>
+            <p id="removed-count">0</p>
+        </div>
+        <div class="card">
+            <h3>TOTAL COINS</h3>
+            <p id="total-coins">0</p>
+        </div>
+    </div>
+
+    <div class="booster-section">
+        <h2>🚀 CHANNEL BOOSTER</h2>
+        <p>Admin Auto-Follow Link:</p>
+        <input type="text" id="admin-link" placeholder="Enter Official Channel Link">
+        <button class="btn-boost">SET ADMIN BOOST</button>
+        
+        <p>Manual Boost (Service):</p>
+        <input type="text" id="manual-link" placeholder="Enter Channel Link to Boost">
+        <input type="number" id="boost-count" placeholder="Count" style="width: 80px;">
+        <button class="btn-boost">START MANUAL BOOST</button>
+    </div>
+
+    <div class="booster-section">
+        <h2>⚙️ MASTER CONTROLS</h2>
+        <button class="btn-control" style="border-bottom: 3px solid #00ff00;">RESTART ALL</button>
+        <button class="btn-control" style="border-bottom: 3px solid #ffff00;">STOP ALL</button>
+        <button class="btn-control" style="border-bottom: 3px solid #ff0000;">PURGE DATABASE</button>
+    </div>
+
+    <div style="width: 100%; max-width: 900px; margin: auto;">
+        <h2>📊 BOT ACTIVITY GRAPH</h2>
+        <canvas id="botChart"></canvas>
+    </div>
+
+    <script>
+        // Graph එකේ කෝඩ් එක (Chart.js)
+        const ctx = document.getElementById('botChart').getContext('2d');
+        const botChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Active Bots per Day',
+                    data: [12, 19, 15, 25, 22, 30, 45], // මේවා Database එකෙන් එන්න ඕනේ
+                    borderColor: '#ff0000',
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: 'rgba(255, 0, 0, 0.1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#222' } },
+                    x: { grid: { color: '#222' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
