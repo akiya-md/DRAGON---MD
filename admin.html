@@ -3,140 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>𝐀𝐊𝐈𝐘𝐀 龍 𝐌𝐃 - Admin Panel</title>
+    <title>𝐀𝐊𝐈𝐘𝐀 龍 𝐌𝐃 - Secure Admin</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body {
-            background-color: #0a0a0a;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-        .header {
-            text-align: center;
-            border-bottom: 2px solid #ff0000;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        .banner {
-            width: 100%;
-            max-width: 800px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px #ff0000;
-        }
-        .stats-container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-        .card {
-            background: linear-gradient(145deg, #1a1a1a, #000000);
-            border: 1px solid #ff0000;
-            padding: 20px;
-            border-radius: 15px;
-            width: 200px;
-            text-align: center;
-            margin: 10px;
-        }
-        .card h3 { color: #ff0000; margin: 0; }
-        .card p { font-size: 24px; font-weight: bold; }
+        body { background-color: #0a0a0a; color: #ffffff; font-family: sans-serif; margin: 0; padding: 20px; }
         
-        .booster-section {
-            background: #111;
-            padding: 20px;
-            border-radius: 15px;
-            border-left: 5px solid #ff0000;
-            margin-bottom: 30px;
+        /* Login Overlay */
+        #login-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #050505; display: flex; justify-content: center; align-items: center; z-index: 1000;
         }
-        input, button {
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            margin: 5px;
+        .login-box {
+            background: #111; padding: 40px; border-radius: 20px; border: 1px solid #ff0000; text-align: center;
         }
-        input { width: 60%; background: #222; color: #fff; border: 1px solid #444; }
-        .btn-boost { background: #ff0000; color: white; cursor: pointer; font-weight: bold; }
-        .btn-control { background: #444; color: white; cursor: pointer; }
-        
-        canvas {
-            background: #111;
-            padding: 20px;
-            border-radius: 15px;
+        input[type="password"] {
+            padding: 12px; width: 250px; background: #222; border: 1px solid #444; color: white; border-radius: 8px; text-align: center; font-size: 18px;
         }
+        .btn-login {
+            padding: 12px 30px; background: #ff0000; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px;
+        }
+
+        /* Admin Content (Hidden by default) */
+        #admin-content { display: none; }
+
+        /* Styles from previous admin layout */
+        .header { text-align: center; border-bottom: 2px solid #ff0000; padding-bottom: 20px; margin-bottom: 30px; }
+        .banner { width: 100%; max-width: 600px; border-radius: 15px; box-shadow: 0 0 20px #ff0000; }
+        .card { background: #111; border: 1px solid #ff0000; padding: 20px; border-radius: 15px; width: 200px; text-align: center; margin: 10px; display: inline-block; }
+        .booster-section { background: #111; padding: 20px; border-radius: 15px; border-left: 5px solid #ff0000; margin-bottom: 30px; text-align: left; }
+        input[type="text"], input[type="number"] { padding: 10px; background: #222; color: #fff; border: 1px solid #444; border-radius: 5px; margin: 5px; }
+        .btn-boost { background: #ff0000; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <img src="logo2.jpg" alt="AKIYA Logo" class="banner">
-        <h1>𝐀𝐊𝐈𝐘𝐀 龍 𝐌𝐃 - 𝚂𝚄𝙿𝙴𝚁 𝙰𝙳𝙼𝙸𝙽 𝙿𝙰𝙽𝙴𝙻</h1>
-    </div>
-
-    <div class="stats-container">
-        <div class="card">
-            <h3>ACTIVE BOTS</h3>
-            <p id="active-count">0</p>
-        </div>
-        <div class="card">
-            <h3>REMOVED BOTS</h3>
-            <p id="removed-count">0</p>
-        </div>
-        <div class="card">
-            <h3>TOTAL COINS</h3>
-            <p id="total-coins">0</p>
+    <div id="login-overlay">
+        <div class="login-box">
+            <h2 style="color: #ff0000;">🔐 ADMIN ACCESS</h2>
+            <p style="color: #888;">Enter Master Password</p>
+            <input type="password" id="admin-pass" placeholder="••••••••">
+            <br>
+            <button class="btn-login" onclick="checkAuth()">LOGIN NOW</button>
+            <p id="error-msg" style="color: yellow; font-size: 12px; margin-top: 10px; display: none;">Wrong Password! Try again.</p>
         </div>
     </div>
 
-    <div class="booster-section">
-        <h2>🚀 CHANNEL BOOSTER</h2>
-        <p>Admin Auto-Follow Link:</p>
-        <input type="text" id="admin-link" placeholder="Enter Official Channel Link">
-        <button class="btn-boost">SET ADMIN BOOST</button>
+    <div id="admin-content">
+        <div class="header">
+            <img src="logo2.jpg" alt="AKIYA Logo" class="banner">
+            <h1>𝐀𝐊𝐈𝐘𝐀 龍 𝐌𝐃 - 𝚂𝚄𝙿𝙴𝚁 𝙰𝙳𝙼𝙸𝙽</h1>
+        </div>
+
+        <div style="text-align: center;">
+            <div class="card"><h3>ACTIVE BOTS</h3><p>0</p></div>
+            <div class="card"><h3>REMOVED BOTS</h3><p>0</p></div>
+        </div>
+
+        <div class="booster-section">
+            <h2>🚀 CHANNEL BOOSTER</h2>
+            <p>Target Channel Link:</p>
+            <input type="text" id="target-link" style="width: 70%;" placeholder="https://whatsapp.com/channel/xxx">
+            <button class="btn-boost">UPDATE AUTO-BOOST</button>
+        </div>
+
+        <div class="booster-section">
+            <h2>⚙️ MASTER CONTROLS</h2>
+            <button class="btn-boost" style="background: #444;">RESTART SYSTEM</button>
+            <button class="btn-boost" style="background: #444;">SHUTDOWN ALL BOTS</button>
+        </div>
+    </div>
+
+      function checkAuth() {
+        const pass = document.getElementById('admin-pass').value;
         
-        <p>Manual Boost (Service):</p>
-        <input type="text" id="manual-link" placeholder="Enter Channel Link to Boost">
-        <input type="number" id="boost-count" placeholder="Count" style="width: 80px;">
-        <button class="btn-boost">START MANUAL BOOST</button>
-    </div>
+        // "1118" කියන එක Ba4 වලින් මෙන්න මෙහෙමයි එන්නේ
+        const key = "QWtpbmR1QERld3NoYW4yMDI0MTExOA=="; 
 
-    <div class="booster-section">
-        <h2>⚙️ MASTER CONTROLS</h2>
-        <button class="btn-control" style="border-bottom: 3px solid #00ff00;">RESTART ALL</button>
-        <button class="btn-control" style="border-bottom: 3px solid #ffff00;">STOP ALL</button>
-        <button class="btn-control" style="border-bottom: 3px solid #ff0000;">PURGE DATABASE</button>
-    </div>
-
-    <div style="width: 100%; max-width: 900px; margin: auto;">
-        <h2>📊 BOT ACTIVITY GRAPH</h2>
-        <canvas id="botChart"></canvas>
-    </div>
-
-    <script>
-        // Graph එකේ කෝඩ් එක (Chart.js)
-        const ctx = document.getElementById('botChart').getContext('2d');
-        const botChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                datasets: [{
-                    label: 'Active Bots per Day',
-                    data: [12, 19, 15, 25, 22, 30, 45], // මේවා Database එකෙන් එන්න ඕනේ
-                    borderColor: '#ff0000',
-                    tension: 0.4,
-                    fill: true,
-                    backgroundColor: 'rgba(255, 0, 0, 0.1)'
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { beginAtZero: true, grid: { color: '#222' } },
-                    x: { grid: { color: '#222' } }
-                }
-            }
-        });
-    </script>
+        if (btoa(pass) === key) {
+            document.getElementById('login-overlay').style.display = 'none';
+            document.getElementById('admin-content').style.display = 'block';
+            sessionStorage.setItem("admin_auth", "true");
+        } else {
+            document.getElementById('error-msg').style.display = 'block';
+            document.getElementById('admin-pass').value = "";
+        }
+    }
 </body>
 </html>
