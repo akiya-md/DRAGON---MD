@@ -40,7 +40,7 @@ bot.on('message', async (msg) => {
         switch (command) {
             case "menu":
                 const menuText = await getAkiyaMenu(senderName);
-                await bot.sendMessage(from, { image: { url: './logo2.jpg' }, caption: menuText });
+                await bot.sendMessage(from, { image: { url: './logo2.png' }, caption: menuText });
                 break;
 
             case "alive":
