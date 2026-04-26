@@ -3,15 +3,21 @@ const { v4: uuidv4 } = require('uuid');
 
 // 🛠️ Firebase සම්බන්ධතාවය (Render Environment Variables මගින්)
 if (!admin.apps.length) {
-    admin.initializeApp({
-        credential: admin.credential.cert({
-            projectId: process.env.FIREBASE_PROJECT_ID || "akiya-dragon-v2",
-            clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-            // Private Key එකේ තියෙන \n ප්‍රශ්නය විසඳීම
-            privateKey: process.env.FIREBASE_PRIVATE_KEY ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n') : undefined,
-        }),
-        databaseURL: process.env.FIREBASE_DATABASE_URL || "https://akiya-dragon-v2-default-rtdb.asia-southeast1.firebasedatabase.app/"
-    });
+    try {
+        admin.initializeApp({
+            credential: admin.credential.cert({
+                projectId: process.env.FIREBASE_PROJECT_ID || "akiya-dragon-v2",
+                clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+                // Private Key එකේ තියෙන අමතර quotes සහ \n ප්‍රශ්න විසඳීම
+                privateKey: process.env.FIREBASE_PRIVATE_KEY 
+                    ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n').replace(/"/g, '') 
+                    : undefined,
+            }),
+            databaseURL: process.env.FIREBASE_DATABASE_URL || "https://akiya-dragon-v2-default-rtdb.asia-southeast1.firebasedatabase.app/"
+        });
+    } catch (e) {
+        console.log("Firebase Connection Failed: " + e.message);
+    }
 }
 
 const db = admin.database();
@@ -19,29 +25,35 @@ const db = admin.database();
 // 🪙 කොයින් ප්‍රමාණය ලබාගැනීමේ Function එක
 async function getUserCoins(userId) {
     const cleanId = userId.replace(/[^0-9]/g, '');
-    const snapshot = await db.ref('users/' + cleanId + '/coins').once('value');
-    return snapshot.val() || 0;
+    try {
+        const snapshot = await db.ref('users/' + cleanId + '/coins').once('value');
+        return snapshot.val() || 0;
+    } catch (e) {
+        return 0;
+    }
 }
 
 // ✨ අලුත් යූසර් කෙනෙක් බොට්ව කනෙක්ට් කළ විට (උඹේ පරණ ලොජික් එක ඒ විදිහටම)
 async function welcomeNewUser(userNumber, userName) {
     const cleanNumber = userNumber.replace(/[^0-9]/g, '');
     const userRef = db.ref('users/' + cleanNumber);
-    const snapshot = await userRef.once('value');
 
-    if (!snapshot.exists()) {
-        const secretKey = uuidv4().split('-')[0].toUpperCase(); 
-        
-        await userRef.set({
-            name: userName,
-            number: cleanNumber,
-            password: secretKey,
-            coins: 500,
-            joinedDate: new Date().toISOString(),
-            status: "Active"
-        });
+    try {
+        const snapshot = await userRef.once('value');
 
-        const welcomeMsg = `
+        if (!snapshot.exists()) {
+            const secretKey = uuidv4().split('-')[0].toUpperCase(); 
+            
+            await userRef.set({
+                name: userName,
+                number: cleanNumber,
+                password: secretKey,
+                coins: 500,
+                joinedDate: new Date().toISOString(),
+                status: "Active"
+            });
+
+            const welcomeMsg = `
 📸 [logo2.jpg]
 🙏 ආයුබෝවන් | வணக்கம் | AYUBOWAN!
 ---------------------------------------
@@ -62,9 +74,12 @@ async function welcomeNewUser(userNumber, userName) {
 ---------------------------------------
 𝐏𝐎𝐖𝐄𝐑𝐄𝐃 𝐁𝐘 𝐀𝐊𝐈𝐘𝐀 龍 ⚙️ - 𝙼𝙳 ◈| ⚜️🏷️`;
 
-        return welcomeMsg;
-    } else {
-        return "Welcome Back, Chief! බොට් සක්‍රියයි. .MENU TYPE කර වැඩ පටන් ගන්න.";
+            return welcomeMsg;
+        } else {
+            return "Welcome Back, Chief! බොට් සක්‍රියයි. .MENU TYPE කර වැඩ පටන් ගන්න.";
+        }
+    } catch (e) {
+        return "Welcome Back! (Database Syncing...)";
     }
 }
 
