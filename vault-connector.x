@@ -2,22 +2,25 @@ const admin = require('firebase-admin');
 const { v4: uuidv4 } = require('uuid');
 
 /**
- * 🛠️ Firebase Config එක සැකසීම
- * Render එකේ තියෙන Environment Variables වල අමතර quotes හෝ 
- * line breaks තිබුණොත් ඒවා මෙතැනින් ස්වයංක්‍රීයව පිරිසිදු කරනවා.
+ * 🛠️ Firebase Config පිරිසිදු කිරීම
+ * Render එකේ Environment Variables වලින් එන Private Key එකේ 
+ * තිබිය හැකි දෝෂ (Quotes, Spaces, New Lines) මෙතැනින් නිවැරදි කරයි.
  */
+let pKey = process.env.FIREBASE_PRIVATE_KEY;
+if (pKey) {
+    // String එකක් බව තහවුරු කර, Quotes අයින් කර, \n ටික නියමිත පේළි බවට පත් කරයි
+    pKey = pKey.replace(/"/g, '').replace(/\\n/g, '\n').trim();
+}
+
 const firebaseConfig = {
     projectId: process.env.FIREBASE_PROJECT_ID || "akiya-dragon-v2",
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY 
-        ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n').replace(/"/g, '').trim() 
-        : undefined,
+    privateKey: pKey,
 };
 
 // 🛡️ Firebase Initialization
 try {
     if (!admin.apps.length) {
-        // config එකේ අත්‍යවශ්‍ය දත්ත තිබේ නම් පමණක් initialize කරනවා
         if (firebaseConfig.privateKey && firebaseConfig.clientEmail) {
             admin.initializeApp({
                 credential: admin.credential.cert(firebaseConfig),
