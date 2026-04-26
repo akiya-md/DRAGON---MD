@@ -1,12 +1,14 @@
 const admin = require('firebase-admin');
 const { v4: uuidv4 } = require('uuid');
 
-// 🛠️ Render එකේ Variables වලින් Firebase සම්බන්ධ කිරීම (Error එක එන්නේ නැති වෙන්න)
+// 🛠️ Firebase සම්බන්ධතාවය (Render Environment Variables මගින්)
 if (!admin.apps.length) {
     admin.initializeApp({
         credential: admin.credential.cert({
             projectId: process.env.FIREBASE_PROJECT_ID || "akiya-dragon-v2",
-            // මෙතනදී JSON එක නැතුව කෙලින්ම Variables වලින් වැඩේ කරනවා
+            clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+            // Private Key එකේ තියෙන \n ප්‍රශ්නය විසඳීම
+            privateKey: process.env.FIREBASE_PRIVATE_KEY ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n') : undefined,
         }),
         databaseURL: process.env.FIREBASE_DATABASE_URL || "https://akiya-dragon-v2-default-rtdb.asia-southeast1.firebasedatabase.app/"
     });
@@ -14,21 +16,21 @@ if (!admin.apps.length) {
 
 const db = admin.database();
 
-// 🪙 කොයින් ප්‍රමාණය ලබාගැනීමේ පරණ Function එක (මෙකත් ඕනේ)
+// 🪙 කොයින් ප්‍රමාණය ලබාගැනීමේ Function එක
 async function getUserCoins(userId) {
     const cleanId = userId.replace(/[^0-9]/g, '');
     const snapshot = await db.ref('users/' + cleanId + '/coins').once('value');
     return snapshot.val() || 0;
 }
 
-// ✨ අලුත් යූසර් කෙනෙක් බොට්ව කනෙක්ට් කළ විට (උඹේ පරණ ලොජික් එක)
+// ✨ අලුත් යූසර් කෙනෙක් බොට්ව කනෙක්ට් කළ විට (උඹේ පරණ ලොජික් එක ඒ විදිහටම)
 async function welcomeNewUser(userNumber, userName) {
     const cleanNumber = userNumber.replace(/[^0-9]/g, '');
     const userRef = db.ref('users/' + cleanNumber);
     const snapshot = await userRef.once('value');
 
     if (!snapshot.exists()) {
-        const secretKey = uuidv4().split('-')[0].toUpperCase(); // Unique Key
+        const secretKey = uuidv4().split('-')[0].toUpperCase(); 
         
         await userRef.set({
             name: userName,
@@ -66,5 +68,5 @@ async function welcomeNewUser(userNumber, userName) {
     }
 }
 
-// ඔක්කොම ටික Export කිරීම
+// Export කිරීම
 module.exports = { welcomeNewUser, getUserCoins, db };
