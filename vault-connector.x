@@ -1,35 +1,43 @@
 const admin = require('firebase-admin');
 const { v4: uuidv4 } = require('uuid');
 
-// 🛠️ Firebase Config එක පිළිවෙළට සකසමු
+/**
+ * 🛠️ Firebase Config එක සැකසීම
+ * Render එකේ තියෙන Environment Variables වල අමතර quotes හෝ 
+ * line breaks තිබුණොත් ඒවා මෙතැනින් ස්වයංක්‍රීයව පිරිසිදු කරනවා.
+ */
 const firebaseConfig = {
     projectId: process.env.FIREBASE_PROJECT_ID || "akiya-dragon-v2",
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    // පෞද්ගලික යතුර string එකක් විදිහටම යන බව සහතික කරමු
     privateKey: process.env.FIREBASE_PRIVATE_KEY 
-        ? String(process.env.FIREBASE_PRIVATE_KEY).replace(/\\n/g, '\n').replace(/"/g, '').trim() 
+        ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n').replace(/"/g, '').trim() 
         : undefined,
 };
 
-// 🛡️ Firebase Initialization (Error එකක් ආවත් බොට් එක මැරෙන්නේ නැති වෙන්න හදලා තියෙන්නේ)
+// 🛡️ Firebase Initialization
 try {
     if (!admin.apps.length) {
-        admin.initializeApp({
-            credential: admin.credential.cert(firebaseConfig),
-            databaseURL: process.env.FIREBASE_DATABASE_URL || "https://akiya-dragon-v2-default-rtdb.asia-southeast1.firebasedatabase.app/"
-        });
-        console.log("✅ Firebase Initialized Successfully!");
+        // config එකේ අත්‍යවශ්‍ය දත්ත තිබේ නම් පමණක් initialize කරනවා
+        if (firebaseConfig.privateKey && firebaseConfig.clientEmail) {
+            admin.initializeApp({
+                credential: admin.credential.cert(firebaseConfig),
+                databaseURL: process.env.FIREBASE_DATABASE_URL || "https://akiya-dragon-v2-default-rtdb.asia-southeast1.firebasedatabase.app/"
+            });
+            console.log("✅ Firebase Initialized Successfully!");
+        } else {
+            console.error("❌ CRITICAL: Firebase Credentials missing in Environment Variables!");
+        }
     }
 } catch (error) {
     console.error("❌ CRITICAL ERROR: Firebase Initialization Failed:", error.message);
 }
 
-// ⚠️ Database එක Initialize කරන්නේ App එක තිබුණොත් විතරයි (Screenshot 21:55:46 ලෙඩේට විසඳුම)
+// ⚠️ Database එක Initialize කරන්නේ App එක තිබුණොත් විතරයි
 const db = admin.apps.length ? admin.database() : null;
 
 // 🪙 කොයින් ප්‍රමාණය ලබාගැනීමේ Function එක
 async function getUserCoins(userId) {
-    if (!db) return 0; // DB නැත්නම් Error නොදී 0 ලබා දෙනවා
+    if (!db) return 0; 
     const cleanId = userId.replace(/[^0-9]/g, '');
     try {
         const snapshot = await db.ref('users/' + cleanId + '/coins').once('value');
@@ -39,7 +47,7 @@ async function getUserCoins(userId) {
     }
 }
 
-// ✨ අලුත් යූසර් කෙනෙක් බොට්ව කනෙක්ට් කළ විට (Original Logic No Damage)
+// ✨ අලුත් යූසර් කෙනෙක් බොට්ව කනෙක්ට් කළ විට (Original Logic Undamaged)
 async function welcomeNewUser(userNumber, userName) {
     if (!db) return "Welcome Chief! (Database Syncing In Progress...)";
     
