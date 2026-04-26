@@ -2,43 +2,41 @@ const admin = require('firebase-admin');
 const { v4: uuidv4 } = require('uuid');
 
 /**
- * 🛠️ Firebase Config පිරිසිදු කිරීම
- * Render එකේ Environment Variables වලින් එන Private Key එකේ 
- * තිබිය හැකි දෝෂ (Quotes, Spaces, New Lines) මෙතැනින් නිවැරදි කරයි.
+ * 🛠️ Firebase Config - Direct Implementation
+ * Render Environment Variables වල ලෙඩ දෙන නිසා, 
+ * ඔයා එවපු JSON එකේ දත්ත කෙලින්ම මෙතනට ඇතුළත් කළා.
  */
-let pKey = process.env.FIREBASE_PRIVATE_KEY;
-if (pKey) {
-    // String එකක් බව තහවුරු කර, Quotes අයින් කර, \n ටික නියමිත පේළි බවට පත් කරයි
-    pKey = pKey.replace(/"/g, '').replace(/\\n/g, '\n').trim();
-}
-
-const firebaseConfig = {
-    projectId: process.env.FIREBASE_PROJECT_ID || "akiya-dragon-v2",
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    privateKey: pKey,
+const serviceAccount = {
+  "type": "service_account",
+  "project_id": "akiya-dragon-v2",
+  "private_key_id": "22e4865af193a351cbd4706844d7c59d75354d53",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDH3F0peNHemtz2\nubVN7imWJrHKr3Ca/RyGTnsUgyTfzbDfR/nB4sR6mgg4H1Z7cbLMwTpeHnoDWcES\nfm9lGTAkKn7EefgCvUBVcK5NMvuMiFD5UgTRzCS+CIQE0Exr1j1bm2gUvdcm7mrP\nQZWojZ3/q0sibyOPBNZRbh9lnYkNhxp1/RApzWS7OVZE09PotlUxsRemk3lL6rN1\nCkCxXfhmuK902ddqbb0BX+3xJU3AvkJ1jp9jwu0qTR5KOrUeIeZyYmC0JMVioXfD\nb1lENPsO4rx8EhuaMBOVlPh3KV7XtT9sg+EQyvT+e9AkIbFXoihsQfsBbjx1Fmye\nMcZRwiqRAgMBAAECggEACfcQqVekCbgRpEbpTYTea5VbdCxkFkNAbckqGYFKOHM/\nYluqriZYFveZCTDVUV9/e3Z3OkAFZAdAsWMO23TqfcQlaNcexMayR2xQUYq1KIo3\ntN24PixySMwghoOrCs2uZqPYmD+os5ELz/CQhWxlvEyqePGfDZOPetUNgVXd8nfT\nbQ82Hz4pOjWSiTyMJomqKEOA2fmtRyrKA1Agrl83Lj6Me8iYKYWbff7e3KHaqiP5\nPHmPPPk+8op/wp9cYwwxVNP8nq8MOcQuAQmCuxLF3+yrX4z2EO/A5A7ckDyJxAQd\nuk7h+993EPG3PmdqvhWM0oQNUbh/x0SEOy35eD1kIQKBgQDkA+H6Nql0QBWBP7u7\nmjwaZyHzqdH8wpsD+XipNF/rRi6XVrV2jNWOfX4mhgPnbi/I1w81VwEHyoY37mJH\n1jPwO/pp32ufCHLrMUa3U9hI1Z5NuMZNXR71LKlyGicq+s+Oe3p9sF/Q/Oc0Ka//\nlK5qFQY+TdZj2s8ud/CkeAUHoQKBgQDgY+K2sDzmGJcteqQbfgqJX+/FulQhHhlE\nY8kZHwm648vDD3Ea0qeAY9w6UV9+FxVfHmnQaXe3ZM4MrHDhoJZ8m6sw+3XgBRRb\nRDiac1ngASkbWsPzL2pB0iYj6bWWhs2DWhh4hhw+jovTNx9tg9f2rwbAR2964jkQ\nFAiMFNR88QKBgFvJrFhbVM+1VHLZQyt8JSHDzokWHbAQbvKkpIwIx2wgrnTBtP7q\nJrXbksLTRBMP6jCBUl/4jDOktW8iiXG9qt7UZjPkeqBkeE5xYbQ/DlwTkkxbS4it\nKd8sgXGrUYUdvhvvXRnnvEqW5EO9XFoYcjXGDONb1igQV0KvibHLlsrBAoGBALT1\nWLxj3Hjjk+eFZBsXxn+K8t7OqVIb59yTbHXp5frmAklIhrpO7+5GmjAdt5kEHKQc\n7tC4fWdU0CbAWjhbPYE4ORLDeAg1kHkZx1wncm+IABKjXCseLd7vDvsfWuYNyGcJ\nnXp1DQoWAwVPCvVSwjOaayNdeLXtAn/I6CuwELzBAoGAVkizUho+fAD8NanTH9QP\nuWSQ0vx2q9Srn9lLTzSDpLOfDuTGjimwFHU5Tz2OxKCuNnV8Jqu7wHaue5lPmVBy\nHfZt1ZiuCofZ9uIiY06qi/NjWNndh8o4vtkHPRz1R3GaH2WjzrEgJwIVEgpN22KB\nJKIpnhWPrFBgFOiQal9BC78=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@akiya-dragon-v2.iam.gserviceaccount.com",
+  "client_id": "102589073363306050203",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40akiya-dragon-v2.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
 };
 
 // 🛡️ Firebase Initialization
 try {
     if (!admin.apps.length) {
-        if (firebaseConfig.privateKey && firebaseConfig.clientEmail) {
-            admin.initializeApp({
-                credential: admin.credential.cert(firebaseConfig),
-                databaseURL: process.env.FIREBASE_DATABASE_URL || "https://akiya-dragon-v2-default-rtdb.asia-southeast1.firebasedatabase.app/"
-            });
-            console.log("✅ Firebase Initialized Successfully!");
-        } else {
-            console.error("❌ CRITICAL: Firebase Credentials missing in Environment Variables!");
-        }
+        admin.initializeApp({
+            credential: admin.credential.cert(serviceAccount),
+            databaseURL: "https://akiya-dragon-v2-default-rtdb.asia-southeast1.firebasedatabase.app/"
+        });
+        console.log("✅ Firebase Connected Successfully via Direct Config!");
     }
 } catch (error) {
-    console.error("❌ CRITICAL ERROR: Firebase Initialization Failed:", error.message);
+    console.error("❌ Firebase Initialization Failed:", error.message);
 }
 
-// ⚠️ Database එක Initialize කරන්නේ App එක තිබුණොත් විතරයි
+// ⚠️ Database Initialize
 const db = admin.apps.length ? admin.database() : null;
 
-// 🪙 කොයින් ප්‍රමාණය ලබාගැනීමේ Function එක
+// 🪙 getUserCoins Function
 async function getUserCoins(userId) {
     if (!db) return 0; 
     const cleanId = userId.replace(/[^0-9]/g, '');
@@ -50,7 +48,7 @@ async function getUserCoins(userId) {
     }
 }
 
-// ✨ අලුත් යූසර් කෙනෙක් බොට්ව කනෙක්ට් කළ විට (Original Logic Undamaged)
+// ✨ welcomeNewUser Function (Original Message & Logic)
 async function welcomeNewUser(userNumber, userName) {
     if (!db) return "Welcome Chief! (Database Syncing In Progress...)";
     
@@ -100,5 +98,4 @@ async function welcomeNewUser(userNumber, userName) {
     }
 }
 
-// Export කිරීම
 module.exports = { welcomeNewUser, getUserCoins, db };
