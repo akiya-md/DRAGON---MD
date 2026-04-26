@@ -6,6 +6,9 @@
     <title>AKIYA 龍 MD | CONTROL PANEL</title>
     <link rel="icon" type="image/png" href="logo.png">
     
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+
     <style>
         :root { --main-red: #ff0000; --glow: 0 0 15px #ff0000; }
         body { background-color: #050505; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; text-align: center; }
@@ -57,6 +60,10 @@
     <h1>AKIYA 龍 MD</h1>
     <p style="letter-spacing: 5px; color: #888;">THE ULTIMATE AUTOMATION BEAST</p>
 
+    <div style="margin-top: 20px; font-weight: bold; font-family: 'Courier New', monospace; letter-spacing: 2px;">
+        <span style="color: #00ff00;">● LIVE VISITORS: </span><span id="liveVisitors" style="color: #fff; text-shadow: 0 0 10px #00ff00;">0</span>
+    </div>
+
     <div class="card-container">
         <div class="card">
             <div style="font-size: 2rem; margin-bottom: 10px;">🔗</div>
@@ -86,7 +93,7 @@
             <div id="settingsList" style="display:none; text-align: left;">
                 <div style="background: #1a1a1a; padding: 12px; border-radius: 10px; border: 1px solid #ffcc00; margin-bottom: 15px;">
                     <span style="font-size: 0.8rem; color: #aaa;">WELCOME BACK</span>
-                    <h3 style="margin: 5px 0; color: #ffcc00;">🪙 500 COINS AVAILABLE</h3>
+                    <h3 style="margin: 5px 0; color: #ffcc00;">🪙 <span id="userCoins">0</span> COINS AVAILABLE</h3>
                 </div>
                 <div style="color: #00ff00; font-size: 0.85rem; padding: 5px;">
                     • Auto Status View: ACTIVE<br>
@@ -120,13 +127,42 @@
     </footer>
 
     <script>
+        // 🔐 Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUv5wWjEyTfm6fAHISkek4nERQ1cvXx-c",
+            authDomain: "akiya-dragon-v2.firebaseapp.com",
+            projectId: "akiya-dragon-v2",
+            databaseURL: "https://akiya-dragon-v2-default-rtdb.asia-southeast1.firebasedatabase.app/",
+            storageBucket: "akiya-dragon-v2.firebasestorage.app",
+            messagingSenderId: "208953342716",
+            appId: "1:208953342716:web:afa866ce8d9779da5a3579"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // 📈 Live Visitors Logic
+        const visitorsRef = database.ref('stats/visitors');
+        visitorsRef.on('value', (snapshot) => {
+            const count = snapshot.val() || 0;
+            document.getElementById('liveVisitors').innerText = count;
+        });
+
         // 🔐 Access Control
         function checkAccess() {
             const phone = document.getElementById('userPhone').value;
             if(phone === "94755751816") {
                 document.getElementById('loginForm').style.display = 'none';
                 document.getElementById('settingsList').style.display = 'block';
-            } else { alert("අයිතිකරුවා පමණක් ඇතුළු වන්න!"); }
+
+                // Real-time Coin Update for Admin
+                database.ref('users/' + phone + '/coins').on('value', (snapshot) => {
+                    document.getElementById('userCoins').innerText = snapshot.val() || 0;
+                });
+            } else { 
+                alert("අයිතිකරුවා පමණක් ඇතුළු වන්න!"); 
+            }
         }
 
         // 📟 Pair Code Logic
