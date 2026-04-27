@@ -1,7 +1,13 @@
-// core-dragon.js - AKIYA 龍 MD (Final Stable Version)
 const admin = require("firebase-admin");
 const { default: makeWASocket, useMultiFileAuthState, DisconnectReason, delay } = require("@whiskeysockets/baileys");
 const P = require("pino");
+const express = require('express'); // ✅ Express එක උඩට ගත්තා
+
+// 🛡️ Express Server for Render (Port Fix)
+const app = express();
+const port = process.env.PORT || 3000;
+app.get('/', (req, res) => res.send('Dragon Bot is Running!'));
+app.listen(port, () => console.log(`✅ Render Port monitoring on: ${port}`));
 
 // 🛡️ Firebase Credentials
 const serviceAccount = {
@@ -10,13 +16,12 @@ const serviceAccount = {
   "client_email": "firebase-adminsdk-fbsvc@akiya-dragon-v2.iam.gserviceaccount.com"
 };
 
-// 🛡️ Firebase Initialization with Region Fix
+// 🛡️ Firebase Initialization
 const initFirebase = () => {
     try {
         if (admin.apps.length === 0) {
             admin.initializeApp({
                 credential: admin.credential.cert(serviceAccount),
-                // ✅ ඔයාගේ Database එක තියෙන නිවැරදිම URL එක පහතින් තියෙන්නේ
                 databaseURL: "https://akiya-dragon-v2-default-rtdb.asia-southeast1.firebasedatabase.app"
             });
             console.log("✅ Firebase Connected Successfully!");
@@ -72,14 +77,6 @@ async function startBot() {
             console.log('🐉 AKIYA 龍 MD Master System is Online!');
         }
     });
-
-    // Message Upsert and other handlers go here...
 }
 
 startBot();
-
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000;
-app.get('/', (req, res) => res.send('Dragon Bot is Running!'));
-app.listen(port, () => console.log(`Dragon listening on port ${port}`));
