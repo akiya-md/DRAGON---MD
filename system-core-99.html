@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKIYA 龍 MD | Command Center</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+
+    <style>
+        :root { --primary: #ff0000; --bg: #050505; --card-bg: rgba(20, 20, 20, 0.9); --glow: 0 0 15px #ff0000; }
+        body { background-color: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
+        header { padding: 20px; text-align: center; border-bottom: 2px solid var(--primary); box-shadow: var(--glow); background: black; }
+        .dragon-logo { font-size: 2.5rem; font-weight: bold; color: var(--primary); text-shadow: var(--glow); }
+        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; padding: 20px; }
+        .card { background: var(--card-bg); border: 1px solid #333; border-radius: 15px; padding: 20px; backdrop-filter: blur(10px); transition: 0.3s; }
+        .card:hover { border-color: var(--primary); box-shadow: var(--glow); }
+        h3 { color: var(--primary); border-bottom: 1px solid #444; padding-bottom: 10px; text-transform: uppercase; }
+        #globe-container { height: 300px; width: 100%; display: flex; justify-content: center; align-items: center; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid #444; color: white; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.2s; }
+        button:hover { background: #cc0000; transform: scale(1.02); }
+        .pairing-code { font-size: 28px; letter-spacing: 5px; text-align: center; color: #00f2ff; text-shadow: 0 0 15px #00f2ff; margin-top: 20px; font-weight: bold; }
+        .admin-only { display: none; } /* Hidden by default */
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="dragon-logo">AKIYA 龍 MD</div>
+    <p>Ultimate Bot Control & Monitoring System</p>
+</header>
+
+<div class="container">
+    
+    <div class="card">
+        <h3>🔑 CONNECT YOUR BOT (PAIRING)</h3>
+        <p>Enter number with country code:</p>
+        <input type="text" id="phone" placeholder="947xxxxxxxx">
+        <button onclick="requestPairing()">GET PAIRING CODE</button>
+        <div id="pair-display" class="pairing-code"></div>
+    </div>
+
+    <div class="card">
+        <h3>👤 USER SETTINGS (ANTI-BADWORD)</h3>
+        <p>ඔබේ ගෘප් වල auto-delete විය යුතු වචන ඇතුළත් කරන්න:</p>
+        <textarea id="badwords" placeholder="Word1, Word2..."></textarea>
+        <button onclick="saveUserSettings()">SAVE SETTINGS</button>
+    </div>
+
+    <div class="card admin-only" id="admin-globe">
+        <h3>🌍 LIVE WORLD TRACKING (ADMIN)</h3>
+        <div id="globe-container"></div>
+        <p style="text-align:center; color: #00f2ff;">Blue dots = Active Global Connections</p>
+    </div>
+
+    <div class="card admin-only" id="admin-stats">
+        <h3>📈 GROWTH ANALYTICS</h3>
+        <canvas id="botChart"></canvas>
+    </div>
+
+    <div class="card admin-only" id="admin-boost">
+        <h3>🚀 CHANNEL BOOST & REACTION</h3>
+        <input type="text" id="targetLink" placeholder="Channel Link">
+        <select id="boostType">
+            <option>Members Boost</option>
+            <option>Reaction Attack</option>
+        </select>
+        <input type="text" id="emoji" placeholder="Emoji (❤️,🔥)">
+        <button onclick="activateBoost()">ACTIVATE BOOSTER</button>
+    </div>
+
+</div>
+
+<script>
+    // 1. FIREBASE INITIALIZATION
+    const firebaseConfig = {
+        apiKey: "aop4SIq1OjHZn_EW7",
+        databaseURL: "https://service_h6bsq2s.firebaseio.com", // Example URL format
+        projectId: "akiya-md-bot"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // 2. SECURITY: ADMIN CHECK
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('admin') === 'true') {
+        document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'block');
+        initAdminFeatures();
+    }
+
+    // 3. PAIRING LOGIC
+    function requestPairing() {
+        const num = document.getElementById('phone').value;
+        if(!num) return alert("අංකය ඇතුළත් කරන්න!");
+        document.getElementById('pair-display').innerText = "GENERATING...";
+        
+        // Simulating Pairing with your Service Key
+        setTimeout(() => {
+            const code = Math.random().toString(36).substring(2, 10).toUpperCase();
+            document.getElementById('pair-display').innerText = code;
+        }, 1500);
+    }
+
+    // 4. USER SETTINGS
+    function saveUserSettings() {
+        const words = document.getElementById('badwords').value;
+        alert("Settings Saved Successfully!");
+    }
+
+    // 5. ADMIN FEATURES (ONLY RUNS IF ADMIN=TRUE)
+    function initAdminFeatures() {
+        // Globe (Three.js)
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(300, 300);
+        document.getElementById('globe-container').appendChild(renderer.domElement);
+        const globe = new THREE.Mesh(new THREE.SphereGeometry(5, 32, 32), new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true }));
+        scene.add(globe);
+        camera.position.z = 10;
+        function anim() { requestAnimationFrame(anim); globe.rotation.y += 0.005; renderer.render(scene, camera); }
+        anim();
+
+        // Chart (Chart.js)
+        new Chart(document.getElementById('botChart'), {
+            type: 'line',
+            data: { labels: ['Apr 20', 'Apr 22', 'Apr 24', 'Apr 26'], datasets: [{ label: 'Active Bots', data: [50, 80, 150, 300], borderColor: '#ff0000', fill: true }] }
+        });
+    }
+
+    function activateBoost() {
+        alert("Boosting signal sent via " + "template_7slq3e6");
+    }
+</script>
+
+</body>
+</html>
